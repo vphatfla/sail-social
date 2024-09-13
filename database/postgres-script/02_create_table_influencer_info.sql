@@ -1,7 +1,7 @@
 DROP TABLE IF EXISTS "influencer_info";
 
 CREATE TABLE "influencer_info" (
-	id INT PRIMRARY KEY REFERENCES "influencer_credential"(id), 
+	id INT PRIMARY KEY REFERENCES "influencer_credential"(id), 
 	email VARCHAR(500), 
 	phone_number VARCHAR(20),
 	first_name VARCHAR(100),
