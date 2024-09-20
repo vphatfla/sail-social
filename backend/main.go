@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"net/http"
 	"vphatlfa/booster-hub/db"
 )
 
@@ -10,4 +11,5 @@ func main() {
 
 	db.InitPostgresPoolConnection()
 
+	http.ListenAndServe(":3000", router())
 }
