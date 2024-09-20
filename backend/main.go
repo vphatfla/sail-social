@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net/http"
 	"vphatlfa/booster-hub/db"
+	"vphatlfa/booster-hub/router"
 )
 
 func main() {
@@ -11,5 +12,5 @@ func main() {
 
 	db.InitPostgresPoolConnection()
 
-	http.ListenAndServe(":3000", router())
+	http.ListenAndServe(":3000", router.MainRouter())
 }
