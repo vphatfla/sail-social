@@ -13,6 +13,7 @@ var (
 )
 
 func InitPostgresPoolConnection() {
+	fmt.Println("Creating DB Connection Pool")
 	var err error
 	DBPool, err = pgxpool.New(context.Background(), os.Getenv("DATABASE_URL"))
 	if err != nil {

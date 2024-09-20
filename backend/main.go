@@ -1,12 +1,13 @@
 package main
 
-import {
+import (
 	"fmt"
+	"vphatlfa/booster-hub/db"
+)
 
-}
 func main() {
-	fmt.Println("App Started")
+	fmt.Print("App Started\n\n")
 
 	db.InitPostgresPoolConnection()
-	
+
 }
