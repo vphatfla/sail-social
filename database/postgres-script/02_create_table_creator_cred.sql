@@ -1,6 +1,6 @@
-DROP TABLE IF EXISTS "influencer_credential";
+DROP TABLE IF EXISTS "creator_credential";
 
-CREATE TABLE "influencer_credential" (
+CREATE TABLE "creator_credential" (
 	id SERIAL PRIMARY KEY, 
 	email VARCHAR(255) UNIQUE, 
 	password BYTEA,
