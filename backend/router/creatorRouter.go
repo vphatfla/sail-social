@@ -14,6 +14,7 @@ func creatorRouter() http.Handler {
 	r.Group(func(r chi.Router) {
 		r.Get("/", creatorHandler.DefaultHandler)
 		r.Post("/sign-up", creatorHandler.CreatorSignUpHandler)
+		r.Post("/log-in", creatorHandler.LoginHandler)
 	})
 	return r
 }
