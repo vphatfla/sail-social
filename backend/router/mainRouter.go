@@ -24,7 +24,7 @@ func redirectRouter() http.Handler {
 		r.Get("/helloworld", handler.HelloWorldHandler)
 	})
 
-	r.Mount("/influencer", influencerRouter())
+	r.Mount("/Creator", CreatorRouter())
 	r.Mount("/business", businessRouter())
 	r.Mount("/admin", adminRouter())
 	return r
