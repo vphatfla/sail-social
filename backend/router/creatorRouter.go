@@ -7,12 +7,13 @@ import (
 	"github.com/go-chi/chi/v5"
 )
 
-func CreatorRouter() http.Handler {
+func creatorRouter() http.Handler {
 	r := chi.NewRouter()
 
 	// Public Routes
 	r.Group(func(r chi.Router) {
 		r.Get("/", creatorHandler.DefaultHandler)
+		r.Post("/sign-up", creatorHandler.CreatorSignUpHandler)
 	})
 	return r
 }
