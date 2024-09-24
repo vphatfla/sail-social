@@ -1,6 +1,7 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import NavBar from './components/NavBar/NavBar';
+import { AuthProvider } from './contexts/AuthContext';
 
 import Home from './pages/Home';
 import Learn from './pages/Learn';
@@ -12,20 +13,22 @@ import SignUp from './pages/SignUp';
 
 const App: React.FC = () => {
   return (
-    <div>
-      <NavBar />
-      <div style={{ paddingTop: '70px' }}>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/learn" element={<Learn />} />
-          <Route path="/business" element={<Business />} />
-          <Route path="/creators" element={<Creators />} />
-          <Route path="/pricing" element={<Pricing />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<SignUp />} />
-        </Routes>
+    <AuthProvider>
+      <div>
+        <NavBar />
+        <div style={{ paddingTop: '70px' }}>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/learn" element={<Learn />} />
+            <Route path="/business" element={<Business />} />
+            <Route path="/creators" element={<Creators />} />
+            <Route path="/pricing" element={<Pricing />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<SignUp />} />
+          </Routes>
+        </div>
       </div>
-    </div>
+    </AuthProvider>
   );
 };
 
