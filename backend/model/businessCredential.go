@@ -1,9 +1,10 @@
 package model
 
 type BusinessCredential struct {
-	ID           int    `json:"id"`
-	Email        string `json:"email"`
-	Password     []byte `json:"password"`
-	Phone_number string `json:"phoneNumber"`
-	Is_verified  bool   `json:"isVerified"`
+	ID             int64  `json:"id,omitempty"`
+	Email          string `json:"email"`
+	RawPassword    string `json:"password"`
+	HashedPassword []byte
+	PhoneNumber    string `json:"phoneNumber,omitempty"`
+	IsVerified     bool   `json:"isVerified,omitempty"`
 }
