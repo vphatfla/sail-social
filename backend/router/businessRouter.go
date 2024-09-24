@@ -13,7 +13,6 @@ func businessRouter() http.Handler {
 	// Public Routes
 	r.Group(func(r chi.Router) {
 		r.Get("/", businesshandler.DefaultHandler)
-
 	})
 	return r
 }

@@ -2,6 +2,7 @@ package jwtToken
 
 import (
 	"fmt"
+	"strconv"
 	"time"
 
 	"github.com/golang-jwt/jwt/v5"
@@ -13,7 +14,7 @@ var secretKey = []byte("your-secret-key")
 func GenerateJWTToken(userId int64, typeUser string) (string, error) {
 	// claims
 	claims := jwt.MapClaims{
-		"userId":   userId,
+		"userId":   strconv.Itoa(int(userId)), // convert to string
 		"typeUser": typeUser,
 		"exp":      time.Now().Add(time.Hour * 24).Unix(),
 	}
@@ -40,7 +41,8 @@ func VerifyJWTToken(tokenString string, userId string, typeUser string) (bool, e
 	// Extract and verify claims
 	if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
 		// Check if the user_id claim matches the provided userID
-		if claims["user_id"] == userId && claims["typeUser"] == typeUser {
+
+		if claims["userId"] == userId && claims["typeUser"] == typeUser {
 			return true, nil
 		} else {
 			return false, fmt.Errorf("user ID or/and type user does not match")
