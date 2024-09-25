@@ -1,6 +1,6 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
-import NavBar from './components/NavBar/NavBar';
+import NavBar from './components/NavBar';
 import { AuthProvider } from './contexts/AuthContext';
 
 import Home from './pages/Home';
@@ -16,7 +16,7 @@ const App: React.FC = () => {
     <AuthProvider>
       <div>
         <NavBar />
-        <div style={{ paddingTop: '70px' }}>
+        <div className='mt-24 container mx-auto'>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/learn" element={<Learn />} />

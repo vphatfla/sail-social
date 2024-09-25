@@ -1,5 +1,4 @@
 import React from 'react';
-import './Page.css';
 
 const Learn: React.FC = () => {
   return (

@@ -49,7 +49,7 @@ const Login: React.FC = () => {
   };
 
   return (
-    <Container className="page-container">
+    <div>
       <h2 className="text-center">Login</h2>
 
       <ToggleButtonGroup
@@ -96,7 +96,7 @@ const Login: React.FC = () => {
           Login as {userType === 'creator' ? 'Creator' : 'Local Business'}
         </Button>
       </Form>
-    </Container>
+    </div>
   );
 };
 
