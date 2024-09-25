@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Form, Button, Container, ToggleButtonGroup, ToggleButton } from 'react-bootstrap';
+import { Form, Button, ToggleButtonGroup, ToggleButton } from 'react-bootstrap';
+import {motion} from "framer-motion"
 import { useAuth } from '../contexts/AuthContext';
 import { decryptToken } from '../utils/TokenUtils';
 import { useNavigate } from 'react-router-dom';
@@ -63,7 +64,12 @@ const SignUp: React.FC = () => {
   };
   
   return (
-    <div>
+    <motion.div
+      initial={{ opacity: 0, x: -100 }}
+      animate={{ opacity: 1, x: 0 }}
+      exit={{ opacity: 0, x: 100 }}
+      transition={{ duration: 0.5 }}
+    >
       <h2 className="text-center">Sign Up</h2>
 
       <ToggleButtonGroup
@@ -109,7 +115,7 @@ const SignUp: React.FC = () => {
           Sign Up as {userType === 'creator' ? 'Creator' : 'Local Business'}
         </Button>
       </Form>
-    </div>
+    </motion.div>
   );
 };
 

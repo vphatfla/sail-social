@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { FaBars, FaTimes } from 'react-icons/fa';
 
 const NavBar: React.FC = () => {
@@ -32,71 +32,148 @@ const NavBar: React.FC = () => {
       }`}
     >
       <div className="container mx-auto py-3 flex justify-between items-center">
-        {/* Grouping BoosterHub and Links together */}
         <div className="flex items-center space-x-8">
-          <Link to="/" className="text-2xl font-bold text-black">
+          <NavLink 
+            to="/"
+            className={({ isActive }) =>
+              `text-2xl font-bold transition-colors ${
+                isActive ? 'text-blue-500' : 'text-black hover:text-blue-500'
+              }`
+            }
+          >
             Booster Hub
-          </Link>
-          {/* Desktop Links (hidden on mobile) */}
+          </NavLink>
           <div className="hidden md:flex space-x-4">
-            <Link to="/learn" className="text-gray-700 hover:text-black transition-colors">
+            <NavLink 
+              to="/learn" 
+              className={({ isActive }) =>
+                `transition-colors ${
+                  isActive ? 'text-blue-500 border-b-2 border-blue-500' : 'text-gray-700 hover:text-blue-500'
+                }`
+              }
+            >
               Learn
-            </Link>
-            <Link to="/business" className="text-gray-700 hover:text-black transition-colors">
+            </NavLink>
+            <NavLink 
+              to="/business" 
+              className={({ isActive }) =>
+                `transition-colors ${
+                  isActive ? 'text-blue-500 border-b-2 border-blue-500' : 'text-gray-700 hover:text-blue-500'
+                }`
+              }
+            >
               Business
-            </Link>
-            <Link to="/creators" className="text-gray-700 hover:text-black transition-colors">
+            </NavLink>
+            <NavLink 
+              to="/creators" 
+              className={({ isActive }) =>
+                `transition-colors ${
+                  isActive ? 'text-blue-500 border-b-2 border-blue-500' : 'text-gray-700 hover:text-blue-500'
+                }`
+              }
+            >
               Creators
-            </Link>
-            <Link to="/pricing" className="text-gray-700 hover:text-black transition-colors">
+            </NavLink>
+            <NavLink 
+              to="/pricing" 
+              className={({ isActive }) =>
+                `transition-colors ${
+                  isActive ? 'text-blue-500 border-b-2 border-blue-500' : 'text-gray-700 hover:text-blue-500'
+                }`
+              }
+            >
               Pricing
-            </Link>
+            </NavLink>
           </div>
         </div>
-        {/* Mobile Hamburger Menu Icon */}
         <div className="md:hidden">
           <FaBars className="text-2xl cursor-pointer" onClick={toggleMenu} />
         </div>
-        {/* Login and Sign Up buttons (hidden on mobile) */}
         <div className="hidden md:flex items-center space-x-4">
-          <Link to="/login" className="text-gray-700 hover:text-black transition-colors">
+          <NavLink 
+            to="/login" 
+            className={({ isActive }) =>
+              `transition-colors ${
+                isActive ? 'text-blue-500 border-b-2 border-blue-500' : 'text-gray-700 hover:text-blue-500'
+              }`
+            }
+          >
             Login
-          </Link>
-          <Link to="/signup">
+          </NavLink>
+          <NavLink to="/signup">
             <button className="bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-600 transition-colors">
               Get in Touch
             </button>
-          </Link>
+          </NavLink>
         </div>
       </div>
 
-      {/* Full-Screen Mobile Menu (Slide from right) */}
       <div
         className={`fixed top-0 right-0 w-full h-full bg-white flex flex-col justify-center items-center space-y-6 transform ${
           menuOpen ? 'translate-x-0' : 'translate-x-full'
         } transition-transform duration-500 ease-in-out`}
       >
         <FaTimes className="absolute top-5 right-5 text-3xl cursor-pointer" onClick={toggleMenu} />
-        <Link to="/learn" className="text-xl text-gray-700 hover:text-black" onClick={toggleMenu}>
+        <NavLink 
+          to="/learn" 
+          className={({ isActive }) =>
+            `transition-colors ${
+              isActive ? 'text-blue-500 border-b-2 border-blue-500' : 'text-gray-700 hover:text-blue-500'
+            }`
+          }
+          onClick={toggleMenu}
+        >
           Learn
-        </Link>
-        <Link to="/business" className="text-xl text-gray-700 hover:text-black" onClick={toggleMenu}>
+        </NavLink>
+        <NavLink 
+          to="/business" 
+          className={({ isActive }) =>
+            `transition-colors ${
+              isActive ? 'text-blue-500 border-b-2 border-blue-500' : 'text-gray-700 hover:text-blue-500'
+            }`
+          }
+          onClick={toggleMenu}
+        >
           Business
-        </Link>
-        <Link to="/creators" className="text-xl text-gray-700 hover:text-black" onClick={toggleMenu}>
+        </NavLink>
+        <NavLink 
+          to="/creators" 
+          className={({ isActive }) =>
+            `transition-colors ${
+              isActive ? 'text-blue-500 border-b-2 border-blue-500' : 'text-gray-700 hover:text-blue-500'
+            }`
+          }
+          onClick={toggleMenu}
+        >
           Creators
-        </Link>
-        <Link to="/pricing" className="text-xl text-gray-700 hover:text-black" onClick={toggleMenu}>
+        </NavLink>
+        <NavLink 
+          to="/pricing" 
+          className={({ isActive }) =>
+            `transition-colors ${
+              isActive ? 'text-blue-500 border-b-2 border-blue-500' : 'text-gray-700 hover:text-blue-500'
+            }`
+          }
+          onClick={toggleMenu}
+        >
           Pricing
-        </Link>
-        <Link to="/login" className="text-xl text-gray-700 hover:text-black" onClick={toggleMenu}>
+        </NavLink>
+        <NavLink 
+          to="/login" 
+          className={({ isActive }) =>
+            `transition-colors ${
+              isActive ? 'text-blue-500 border-b-2 border-blue-500' : 'text-gray-700 hover:text-blue-500'
+            }`
+          }
+          onClick={toggleMenu}
+        >
           Login
-        </Link>
-        <Link to="/signup" onClick={toggleMenu}>
+        </NavLink>
+        <NavLink to="/signup" onClick={toggleMenu}>
           <button className="bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-600 transition-colors">
             Get in Touch
           </button>
-        </Link>
+        </NavLink>
       </div>
     </nav>
   );
