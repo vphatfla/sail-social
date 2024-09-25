@@ -26,6 +26,5 @@ func InitPostgresPoolConnection() {
 		os.Exit(1)
 	}
 	fmt.Fprintf(os.Stderr, "Connect to Postgresql successfully!\n\n")
-	// Defer to close the db pool later
-	defer DBPool.Close()
+
 }

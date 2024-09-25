@@ -2,10 +2,10 @@ package model
 
 type Post struct {
 	ID          int     `json:"id"`
-	Business_ID int     `json:"business_id"`
-	Created_at  string  `json:"created_at"`
+	Business_ID int     `json:"businessId"`
+	Created_at  string  `json:"createdAt"`
 	Content     string  `json:"content"`
-	Pay_amount  float64 `json:"pay_amount"`
-	Is_active   bool    `json:"is_active"`
-	Work_time   string  `json:"work_time"`
+	Pay_amount  float64 `json:"payAmount"`
+	Is_active   bool    `json:"isActive"`
+	Work_time   string  `json:"workTime"`
 }
