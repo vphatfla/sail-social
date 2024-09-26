@@ -1,16 +1,17 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import { AuthProvider } from './contexts/AuthContext';
 import { AnimatePresence } from 'framer-motion';
 
 import NavBar from './components/NavBar';
-import Home from './pages/Home';
-import Learn from './pages/Learn';
-import Business from './pages/Business';
-import Creators from './pages/Creators';
-import Pricing from './pages/Pricing';
-import Login from './pages/Login';
-import SignUp from './pages/SignUp';
+
+const Home = React.lazy(() => import('./pages/Home'));
+const Learn = React.lazy(() => import('./pages/Learn'));
+const Business = React.lazy(() => import('./pages/Business'));
+const Creators = React.lazy(() => import('./pages/Creators'));
+const Pricing = React.lazy(() => import('./pages/Pricing'));
+const Login = React.lazy(() => import('./pages/Login'));
+const SignUp = React.lazy(() => import('./pages/SignUp'));
 
 const App: React.FC = () => {
   const location = useLocation();
@@ -20,15 +21,19 @@ const App: React.FC = () => {
       <NavBar />
       <div className='mt-24 container mx-auto'>
         <AnimatePresence mode='wait'>
-          <Routes location={location} key={location.pathname}>
-            <Route path="/" element={<Home />} />
-            <Route path="/learn" element={<Learn />} />
-            <Route path="/business" element={<Business />} />
-            <Route path="/creators" element={<Creators />} />
-            <Route path="/pricing" element={<Pricing />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<SignUp />} />
-          </Routes>
+          <Suspense 
+          // fallback={<div>Loading...</div>}
+          >
+            <Routes location={location} key={location.pathname}>
+              <Route path="/" element={<Home />} />
+              <Route path="/learn" element={<Learn />} />
+              <Route path="/business" element={<Business />} />
+              <Route path="/creators" element={<Creators />} />
+              <Route path="/pricing" element={<Pricing />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<SignUp />} />
+            </Routes>
+          </Suspense>
         </AnimatePresence>
       </div>
     </AuthProvider>
