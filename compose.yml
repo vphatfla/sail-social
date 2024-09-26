@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  database:
+    build:
+      context: ./database
+      dockerfile: Dockerfile
+    image: booster-hub-db-img
+    container_name: booster-hub-db-ctn
+    ports:
+      - "5432:5432"
+  
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    image: booster-hub-backend-img
+    container_name: booster-hub-backend-ctn
+    network_mode: host
+    depends_on:
+      database:
+        condition: service_started
+    environment:
+      - DATABASE_URL=postgres://test_user:password@localhost:5432/app_db
+          
