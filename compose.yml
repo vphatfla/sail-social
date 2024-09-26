@@ -17,6 +17,7 @@ services:
     image: booster-hub-backend-img
     container_name: booster-hub-backend-ctn
     network_mode: host
+    restart: on-failure
     depends_on:
       database:
         condition: service_started
