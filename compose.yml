@@ -7,8 +7,8 @@ services:
       dockerfile: Dockerfile
     image: booster-hub-db-img
     container_name: booster-hub-db-ctn
-    ports:
-      - "5432:5432"
+    networks:
+      - booster-hub-network
   
   backend:
     build:
@@ -16,11 +16,17 @@ services:
       dockerfile: Dockerfile
     image: booster-hub-backend-img
     container_name: booster-hub-backend-ctn
-    network_mode: host
+    ports:
+      - "3000:3000"
     restart: on-failure
+    networks:
+      - booster-hub-network
     depends_on:
       database:
         condition: service_started
     environment:
-      - DATABASE_URL=postgres://test_user:password@localhost:5432/app_db
-          
+      - DATABASE_URL=postgres://test_user:password@database:5432/app_db
+
+networks:
+  booster-hub-network:
+    driver: bridge
