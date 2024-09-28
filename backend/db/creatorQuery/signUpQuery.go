@@ -18,7 +18,7 @@ func CheckIfPhoneNumberExists(phoneNumber string) (bool, error) {
 	return check, err
 }
 
-func InsertNewRecord(creator model.CreatorCredential) (int64, error) {
+func InsertNewCredentialRecord(creator model.CreatorCredential) (int64, error) {
 	var id int64
 	err := db.DBPool.QueryRow(context.Background(), "INSERT INTO creator_credential (email, password, phone_number, is_verified) VALUES ($1, $2, $3, $4) RETURNING id;",
 		creator.Email, creator.HashedPassword, creator.PhoneNumber, false).Scan(&id)

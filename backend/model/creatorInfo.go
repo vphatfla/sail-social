@@ -1,7 +1,7 @@
 package model
 
 type CreatorInfo struct {
-	ID           int    `json:"id"`
+	ID           int64  `json:"id"`
 	Email        string `json:"email"`
 	Phone_number string `json:"phoneNumber"`
 	First_name   string `json:"firstName"`
