@@ -10,8 +10,12 @@ const SignUp: React.FC = () => {
   const [userType, setUserType] = useState<string>('creator');
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
-  const { setUserInfo } = useAuth();
+  const { setUserInfo, isAuthenticated } = useAuth();
   const navigate = useNavigate();
+
+  if (isAuthenticated()){
+    navigate("/")
+  }
 
   const handleToggleChange = (val: string) => {
     setUserType(val);
@@ -59,7 +63,6 @@ const SignUp: React.FC = () => {
       setUserInfo(decodedInfo);
 
       navigate('/');
-      console.log('Sign up successful!');
     }
   };
   

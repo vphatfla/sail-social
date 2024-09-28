@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { FaBars, FaTimes } from 'react-icons/fa';
+import { useAuth } from '../contexts/AuthContext';
 
 const NavBar: React.FC = () => {
   const [scrolling, setScrolling] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const { isAuthenticated, logout } = useAuth();
 
   const handleScroll = () => {
     if (window.scrollY > 50) {
@@ -23,6 +25,11 @@ const NavBar: React.FC = () => {
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
+  };
+
+  const handleLogout = () => {
+    logout();
+    toggleMenu();
   };
 
   return (
@@ -86,25 +93,38 @@ const NavBar: React.FC = () => {
             </NavLink>
           </div>
         </div>
+
         <div className="md:hidden">
           <FaBars className="text-2xl cursor-pointer" onClick={toggleMenu} />
         </div>
+
         <div className="hidden md:flex items-center space-x-4">
-          <NavLink 
-            to="/login" 
-            className={({ isActive }) =>
-              `transition-colors ${
-                isActive ? 'text-blue-500 border-b-2 border-blue-500' : 'text-gray-700 hover:text-blue-500'
-              }`
-            }
-          >
-            Login
-          </NavLink>
-          <NavLink to="/signup">
-            <button className="bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-600 transition-colors">
-              Get in Touch
+          {isAuthenticated() ? (
+            <button
+              className="bg-red-500 text-white px-4 py-2 rounded-full hover:bg-red-600 transition-colors"
+              onClick={logout}
+            >
+              Sign Out
             </button>
-          </NavLink>
+          ) : (
+            <>
+              <NavLink 
+                to="/login" 
+                className={({ isActive }) =>
+                  `transition-colors ${
+                    isActive ? 'text-blue-500 border-b-2 border-blue-500' : 'text-gray-700 hover:text-blue-500'
+                  }`
+                }
+              >
+                Login
+              </NavLink>
+              <NavLink to="/signup">
+                <button className="bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-600 transition-colors">
+                  Get in Touch
+                </button>
+              </NavLink>
+            </>
+          )}
         </div>
       </div>
 
@@ -158,22 +178,34 @@ const NavBar: React.FC = () => {
         >
           Pricing
         </NavLink>
-        <NavLink 
-          to="/login" 
-          className={({ isActive }) =>
-            `transition-colors ${
-              isActive ? 'text-blue-500 border-b-2 border-blue-500' : 'text-gray-700 hover:text-blue-500'
-            }`
-          }
-          onClick={toggleMenu}
-        >
-          Login
-        </NavLink>
-        <NavLink to="/signup" onClick={toggleMenu}>
-          <button className="bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-600 transition-colors">
-            Get in Touch
+
+        {isAuthenticated() ? (
+          <button
+            className="bg-red-500 text-white px-4 py-2 rounded-full hover:bg-red-600 transition-colors"
+            onClick={handleLogout}
+          >
+            Sign Out
           </button>
-        </NavLink>
+        ) : (
+          <>
+            <NavLink 
+              to="/login" 
+              className={({ isActive }) =>
+                `transition-colors ${
+                  isActive ? 'text-blue-500 border-b-2 border-blue-500' : 'text-gray-700 hover:text-blue-500'
+                }`
+              }
+              onClick={toggleMenu}
+            >
+              Login
+            </NavLink>
+            <NavLink to="/signup" onClick={toggleMenu}>
+              <button className="bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-600 transition-colors">
+                Get in Touch
+              </button>
+            </NavLink>
+          </>
+        )}
       </div>
     </nav>
   );

@@ -11,8 +11,12 @@ const Login: React.FC = () => {
   const [password, setPassword] = useState<string>('');
   const [userType, setUserType] = useState<string>('creator');
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const { setUserInfo } = useAuth();
+  const { setUserInfo, isAuthenticated } = useAuth();
   const navigate = useNavigate();
+
+  if (isAuthenticated()){
+    navigate("/")
+  }
 
   const handleToggleChange = (val: string) => {
     setUserType(val);
@@ -45,7 +49,6 @@ const Login: React.FC = () => {
       setUserInfo(decodedInfo);
 
       navigate('/');
-      console.log('Login successful!');
     }
   };
 

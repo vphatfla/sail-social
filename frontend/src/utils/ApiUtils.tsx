@@ -19,7 +19,7 @@ export const callApi = async (
         headers['Authorization'] = `Bearer ${token}`;
       }
 
-      const url = `https://api.example.com${endpoint}`
+      const url = `http://localhost:3000/api${endpoint}`
 
       const response = await fetch(url, {
         method,

@@ -6,6 +6,7 @@ interface AuthContextType {
   userInfo: any;
   setUserInfo: (userInfo: any) => void;
   logout: () => void;
+  isAuthenticated: () => boolean;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -34,8 +35,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     navigate('/login');
   };
 
+  const isAuthenticated = () => {
+    return !!localStorage.getItem('BoosterHubToken') && userInfo != null;
+  };
+
   return (
-    <AuthContext.Provider value={{ userInfo, setUserInfo, logout }}>
+    <AuthContext.Provider value={{ userInfo, setUserInfo, logout, isAuthenticated }}>
       {children}
     </AuthContext.Provider>
   );
