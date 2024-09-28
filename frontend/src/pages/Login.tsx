@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { Form, Button, ToggleButtonGroup, ToggleButton } from 'react-bootstrap';
-import {motion} from "framer-motion"
+import { motion } from 'framer-motion';
 import { useAuth } from '../contexts/AuthContext';
 import { decryptToken } from '../utils/TokenUtils';
 import { useNavigate } from 'react-router-dom';
@@ -14,8 +13,8 @@ const Login: React.FC = () => {
   const { setUserInfo, isAuthenticated } = useAuth();
   const navigate = useNavigate();
 
-  if (isAuthenticated()){
-    navigate("/")
+  if (isAuthenticated()) {
+    navigate('/');
   }
 
   const handleToggleChange = (val: string) => {
@@ -32,16 +31,13 @@ const Login: React.FC = () => {
       password,
     };
 
-    const endpoint = userType === 'creator'
-      ? '/creator/log-in'
-      : '/business/log-in';
+    const endpoint = userType === 'creator' ? '/creator/log-in' : '/business/log-in';
 
-    const response = await callApi(endpoint, "POST", data)
+    const response = await callApi(endpoint, 'POST', data);
 
-    if (response.error){
+    if (response.error) {
       setErrorMessage(response.error || 'Login failed, please try again.');
-    }
-    else {
+    } else {
       const token = response.data.token;
       localStorage.setItem('BoosterHubToken', token);
 
@@ -58,53 +54,65 @@ const Login: React.FC = () => {
       animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0, x: 100 }}
       transition={{ duration: 0.5 }}
+      className="max-w-md mx-auto p-6 bg-white rounded-lg mt-10"
     >
-      <h2 className="text-center">Login</h2>
+      <h2 className="text-2xl font-bold text-center mb-6">Login</h2>
 
-      <ToggleButtonGroup
-        type="radio"
-        name="userType"
-        value={userType}
-        onChange={handleToggleChange}
-        className="mb-4 d-flex justify-content-center"
-      >
-        <ToggleButton id="creator-toggle" value="creator" variant="outline-primary">
+      <div className="flex justify-center mb-6">
+        <button
+          className={`px-6 py-2 rounded-l-full border transition-colors ${userType === 'creator' ? 'bg-blue-500 text-white' : 'bg-white text-gray-600 hover:bg-blue-100'}`}
+          onClick={() => handleToggleChange('creator')}
+        >
           Creator
-        </ToggleButton>
-        <ToggleButton id="business-toggle" value="business" variant="outline-primary">
+        </button>
+        <button
+          className={`px-6 py-2 rounded-r-full border transition-colors ${userType === 'business' ? 'bg-blue-500 text-white' : 'bg-white text-gray-600 hover:bg-blue-100'}`}
+          onClick={() => handleToggleChange('business')}
+        >
           Local Business
-        </ToggleButton>
-      </ToggleButtonGroup>
+        </button>
+      </div>
 
-      <Form onSubmit={handleSubmit}>
-        <Form.Group controlId="formEmail">
-          <Form.Label>Email address</Form.Label>
-          <Form.Control
+      <form onSubmit={handleSubmit}>
+        <div className="mb-4">
+          <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+            Email address
+          </label>
+          <input
+            id="email"
             type="email"
             placeholder="Enter email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
+            className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
           />
-        </Form.Group>
+        </div>
 
-        <Form.Group controlId="formPassword">
-          <Form.Label>Password</Form.Label>
-          <Form.Control
+        <div className="mb-4">
+          <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+            Password
+          </label>
+          <input
+            id="password"
             type="password"
             placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
+            className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
           />
-        </Form.Group>
+        </div>
 
-        {errorMessage && <p className="text-danger">{errorMessage}</p>}
+        {errorMessage && <p className="text-red-600 text-sm text-center mt-2">{errorMessage}</p>}
 
-        <Button variant="primary" type="submit" className="mt-4">
+        <button
+          type="submit"
+          className="w-full bg-blue-500 text-white py-2 rounded-full hover:bg-blue-600 transition-colors mt-4"
+        >
           Login as {userType === 'creator' ? 'Creator' : 'Local Business'}
-        </Button>
-      </Form>
+        </button>
+      </form>
     </motion.div>
   );
 };
