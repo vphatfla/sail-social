@@ -23,6 +23,7 @@ func creatorRouter() http.Handler {
 	r.Group(func(r chi.Router) {
 		r.Use(customMiddleware.CreatorJWTMiddleware)
 		r.Get("/test", creatorHandler.TestHandler)
+		r.Post("/onboarding", creatorHandler.OnboadingHandler)
 	})
 	return r
 }

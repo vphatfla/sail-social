@@ -1,8 +1,10 @@
 package customMiddleware
 
 import (
+	"context"
 	"encoding/json"
 	"net/http"
+	"strconv"
 	"strings"
 	"vphatlfa/booster-hub/auth/jwtToken"
 	customError "vphatlfa/booster-hub/customError"
@@ -27,32 +29,29 @@ func CreatorJWTMiddleware(next http.Handler) http.Handler {
 
 		tokenString := parts[1]
 
-		cid := r.URL.Query().Get("cid")
-		if cid == "" {
-			w.WriteHeader(400)
-			json.NewEncoder(w).Encode(customError.ErrorMessage{Message: "Creator Id is empty"})
-			return
-		}
+		// cid := r.URL.Query().Get("cid")
+		// if cid == "" {
+		// 	w.WriteHeader(400)
+		// 	json.NewEncoder(w).Encode(customError.ErrorMessage{Message: "Creator Id is empty"})
+		// 	return
+		// }
 
-		check, err := jwtToken.VerifyJWTToken(tokenString, cid, "creator")
+		var id int
+		var typeU string
+		id, typeU, err := jwtToken.VerifyJWTToken(tokenString)
 
-		if err != nil || !check {
+		if err != nil {
 			w.WriteHeader(401)
-			if err != nil {
-				json.NewEncoder(w).Encode(customError.ErrorMessage{Message: err.Error()})
-			} else {
-				json.NewEncoder(w).Encode(customError.ErrorMessage{Message: "JWT Check failed"})
-			}
-
+			json.NewEncoder(w).Encode(customError.ErrorMessage{Message: err.Error()})
 			return
 		}
 
-		// Do i need a context?
-		// ctx := context.WithValue(r.Context(), "default", map[string]string{
-		// 	"cid":      cid,
-		// 	"typeUser": "creator",
-		// })
+		// Do i need a context? need to fix here
+		ctx := context.WithValue(r.Context(), "default", map[string]string{
+			"id":       strconv.Itoa(id),
+			"typeUser": typeU,
+		})
 
-		next.ServeHTTP(w, r)
+		next.ServeHTTP(w, r.WithContext(ctx))
 	})
 }
