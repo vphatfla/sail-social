@@ -11,7 +11,7 @@ import (
 // Define a secret key for signing tokens
 var secretKey = []byte("your-secret-key")
 
-func GenerateJWTToken(userId int64, typeUser string) (string, error) {
+func GenerateJWTToken(userId int, typeUser string) (string, error) {
 	// claims
 	claims := jwt.MapClaims{
 		"userId":   strconv.Itoa(int(userId)), // convert to string

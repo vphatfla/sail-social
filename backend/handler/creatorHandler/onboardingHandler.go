@@ -21,7 +21,7 @@ func OnboadingHandler(w http.ResponseWriter, r *http.Request) {
 
 	// check if the info is legit
 
-	check, err := creatorQuery.IsInfoRecordValid(creatorInfo)
+	check, err := creatorQuery.IsInfoRecordValid(int(creatorInfo.ID), creatorInfo.Email, creatorInfo.PhoneNumber)
 
 	if err != nil {
 		w.WriteHeader(400)
@@ -46,5 +46,5 @@ func OnboadingHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.WriteHeader(200)
-	json.NewEncoder(w).Encode(map[string]int64{"id": id})
+	json.NewEncoder(w).Encode(map[string]int{"id": id})
 }

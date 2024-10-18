@@ -24,6 +24,7 @@ func creatorRouter() http.Handler {
 		r.Use(customMiddleware.CreatorJWTMiddleware)
 		r.Get("/test", creatorHandler.TestHandler)
 		r.Post("/onboarding", creatorHandler.OnboadingHandler)
+		r.Post("/portfolio-new", creatorHandler.PostNewPortfolioHandler)
 	})
 	return r
 }
