@@ -1,7 +1,7 @@
 package model
 
 type CreatorCredential struct {
-	ID             int64  `json:"id,omitempty"`
+	ID             int    `json:"id,omitempty"`
 	Email          string `json:"email"`
 	RawPassword    string `json:"password"`
 	HashedPassword []byte

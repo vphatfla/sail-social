@@ -1,9 +1,9 @@
 package model
 
 type CreatorPortfolio struct {
-	ID                 int    `json:"id"`
-	Instagram_link     string `json:"instagramLink"`
-	Tiktok_link        string `json:"tiktokLink"`
-	Instagram_follower int    `json:"instagramFollower"`
-	Tiktok_follower    int    `json:"tiktokFollower"`
+	ID                int    `json:"id"`
+	InstagramLink     string `json:"instagramLink,omitempty"`
+	TiktokLink        string `json:"tiktokLink,omitempty"`
+	InstagramFollower int    `json:"instagramFollower,omitempty"`
+	TiktokFollower    int    `json:"tiktokFollower,omitempty"`
 }
