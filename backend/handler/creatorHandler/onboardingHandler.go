@@ -29,7 +29,7 @@ func OnboadingHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if check {
+	if !check {
 		w.WriteHeader(401)
 		json.NewEncoder(w).Encode(customError.ErrorMessage{Message: "Info not match"})
 		return
