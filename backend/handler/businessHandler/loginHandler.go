@@ -37,7 +37,7 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	businessCredential, err = businessQuery.GetbusinessCredentialByEmail(businessCredential.Email)
+	businessCredential, err = businessQuery.GetBusinessCredentialByEmail(businessCredential.Email)
 	if err != nil {
 		w.WriteHeader(400)
 		json.NewEncoder(w).Encode(customError.ErrorMessage{Message: err.Error() + " passwords do not match"})
