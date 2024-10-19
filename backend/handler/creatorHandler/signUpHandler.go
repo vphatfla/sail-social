@@ -10,7 +10,7 @@ import (
 	"vphatlfa/booster-hub/model"
 )
 
-func CreatorSignUpHandler(w http.ResponseWriter, r *http.Request) {
+func SignUpHandler(w http.ResponseWriter, r *http.Request) {
 	var creatorCredential model.CreatorCredential
 
 	// Decode the json payload
