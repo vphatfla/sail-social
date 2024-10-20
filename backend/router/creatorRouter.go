@@ -4,6 +4,7 @@ import (
 	"net/http"
 	"vphatlfa/booster-hub/customMiddleware"
 	"vphatlfa/booster-hub/handler/creatorHandler"
+	"vphatlfa/booster-hub/handler/postHandler"
 
 	"github.com/go-chi/chi/v5"
 )
@@ -16,7 +17,6 @@ func creatorRouter() http.Handler {
 		r.Get("/", creatorHandler.DefaultHandler)
 		r.Post("/sign-up", creatorHandler.SignUpHandler)
 		r.Post("/log-in", creatorHandler.LoginHandler)
-
 	})
 
 	// Private Routes
@@ -25,6 +25,8 @@ func creatorRouter() http.Handler {
 		r.Get("/test", creatorHandler.TestHandler)
 		r.Post("/onboarding", creatorHandler.OnboadingHandler)
 		r.Post("/portfolio-new", creatorHandler.PostNewPortfolioHandler)
+		r.Post("/apply-new", postHandler.NewApplyToPostHandler)
+		r.Post("/apply-update", postHandler.UpdateApplyToPostHandler)
 	})
 	return r
 }

@@ -24,7 +24,8 @@ func businessRouter() http.Handler {
 		r.Use(customMiddleware.JWTMiddleware)
 		r.Get("/test", businesshandler.TestHandler)
 		r.Post("/onboarding", businesshandler.OnboadingHandler)
-		r.Post("/new-post", postHandler.CreateNewPostHandler)
+		r.Post("/post-new", postHandler.CreateNewPostHandler)
+		r.Post("/post-update", postHandler.UpdatePostHandler)
 	})
 	return r
 }
