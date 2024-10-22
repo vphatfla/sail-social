@@ -45,7 +45,7 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// token
-	token, err := jwtToken.GenerateJWTToken(creatorCredential.ID, "creator")
+	token, err := jwtToken.GenerateJWTToken(creatorCredential.ID, "creator", creatorCredential.IsOnboarded)
 	if err != nil {
 		w.WriteHeader(400)
 		json.NewEncoder(w).Encode(customError.ErrorMessage{Message: "Token : " + err.Error()})
