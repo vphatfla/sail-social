@@ -11,7 +11,7 @@ import (
 // Define a secret key for signing tokens
 var secretKey = []byte("your-secret-key")
 
-func GenerateJWTToken(userId int64, typeUser string) (string, error) {
+func GenerateJWTToken(userId int, typeUser string) (string, error) {
 	// claims
 	claims := jwt.MapClaims{
 		"userId":   strconv.Itoa(int(userId)), // convert to string
@@ -25,7 +25,10 @@ func GenerateJWTToken(userId int64, typeUser string) (string, error) {
 	return token.SignedString(secretKey)
 }
 
-func VerifyJWTToken(tokenString string, userId string, typeUser string) (bool, error) {
+func VerifyJWTToken(tokenString string) (int, string, error) {
+	var id int
+	var typeUser string
+
 	token, err := jwt.Parse(tokenString, func(t *jwt.Token) (interface{}, error) {
 		if _, ok := t.Method.(*jwt.SigningMethodHMAC); !ok {
 			return nil, fmt.Errorf("unexpected signing method: %v", t.Header["alg"])
@@ -34,20 +37,33 @@ func VerifyJWTToken(tokenString string, userId string, typeUser string) (bool, e
 	})
 
 	// Check if the token is valid
-	if err != nil || !token.Valid {
-		return false, err
+	if err != nil {
+		return id, typeUser, err
 	}
 
-	// Extract and verify claims
+	if !token.Valid {
+		return id, typeUser, fmt.Errorf("invalid token")
+	}
+
 	if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
-		// Check if the user_id claim matches the provided userID
-
-		if claims["userId"] == userId && claims["typeUser"] == typeUser {
-			return true, nil
+		claimUserId := claims["userId"]
+		if intValue, ok := claimUserId.(string); ok {
+			id, err = strconv.Atoi(intValue)
+			if err != nil {
+				return id, typeUser, fmt.Errorf("invalid token userId")
+			}
 		} else {
-			return false, fmt.Errorf("user ID or/and type user does not match")
+			return id, typeUser, fmt.Errorf("invalid token userId")
 		}
+
+		claimUserType := claims["typeUser"]
+		if strValue, ok := claimUserType.(string); ok {
+			typeUser = strValue
+		} else {
+			return id, typeUser, fmt.Errorf("invalid token typeUser")
+		}
+
 	}
 
-	return false, fmt.Errorf("invalid token claims")
+	return id, typeUser, nil
 }

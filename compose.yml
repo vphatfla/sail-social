@@ -6,6 +6,9 @@ services:
       context: ./database
       dockerfile: Dockerfile
     image: booster-hub-db-img
+    # port expose for backend dev only
+    ports:
+      - "5432:5432"
     container_name: booster-hub-db-ctn
     networks:
       - booster-hub-network

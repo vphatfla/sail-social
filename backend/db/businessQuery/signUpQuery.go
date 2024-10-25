@@ -18,8 +18,8 @@ func CheckIfPhoneNumberExists(phoneNumber string) (bool, error) {
 	return check, err
 }
 
-func InsertNewRecord(business model.BusinessCredential) (int64, error) {
-	var id int64
+func InsertNewRecord(business model.BusinessCredential) (int, error) {
+	var id int
 	err := db.DBPool.QueryRow(context.Background(), "INSERT INTO business_credential (email, password, phone_number, is_verified) VALUES ($1, $2, $3, $4) RETURNING id;",
 		business.Email, business.HashedPassword, business.PhoneNumber, false).Scan(&id)
 	return id, err

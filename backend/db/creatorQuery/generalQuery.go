@@ -19,3 +19,9 @@ func GetCreatorCredentialByEmail(email string) (model.CreatorCredential, error) 
 	}
 	return creatorCredential, nil
 }
+
+func IsInfoRecordValid(id int, email string, phoneNumber string) (bool, error) {
+	var check bool
+	err := db.DBPool.QueryRow(context.Background(), "SELECT EXISTS (SELECT 1 FROM creator_credential WHERE id = $1 AND email = $2 AND phone_number = $3);", id, email, phoneNumber).Scan(&check)
+	return check, err
+}

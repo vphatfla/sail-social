@@ -10,7 +10,7 @@ import (
 	"vphatlfa/booster-hub/model"
 )
 
-func CreatorSignUpHandler(w http.ResponseWriter, r *http.Request) {
+func SignUpHandler(w http.ResponseWriter, r *http.Request) {
 	var creatorCredential model.CreatorCredential
 
 	// Decode the json payload
@@ -61,7 +61,7 @@ func CreatorSignUpHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	creatorCredential.HashedPassword = hash
 	// insert the record
-	id, err := creatorQuery.InsertNewRecord(creatorCredential)
+	id, err := creatorQuery.InsertNewCredentialRecord(creatorCredential)
 	if err != nil {
 		w.WriteHeader(400)
 		json.NewEncoder(w).Encode(customError.ErrorMessage{Message: "Database : " + err.Error()})
