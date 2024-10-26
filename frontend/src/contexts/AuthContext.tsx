@@ -7,6 +7,9 @@ interface AuthContextType {
   setUserInfo: (userInfo: any) => void;
   logout: () => void;
   isAuthenticated: () => boolean;
+  isOnboarded: () => boolean;
+  isCreator: () => boolean;
+  isBusiness: () => boolean;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -16,7 +19,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const navigate = useNavigate();
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('BoosterHubToken');
     if (token) {
       if (isTokenExpired(token)) {
         logout();
@@ -27,10 +30,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         }
       }
     }
-  }, []);
+  }, [setUserInfo]);
 
   const logout = () => {
-    localStorage.removeItem('token');
+    localStorage.removeItem('BoosterHubToken');
     setUserInfo(null);
     navigate('/login');
   };
@@ -39,8 +42,20 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     return !!localStorage.getItem('BoosterHubToken') && userInfo != null;
   };
 
+  const isOnboarded = () => {
+    return false
+  }
+
+  const isCreator = () => {
+    return true
+  }
+
+  const isBusiness = () => {
+    return true
+  }
+
   return (
-    <AuthContext.Provider value={{ userInfo, setUserInfo, logout, isAuthenticated }}>
+    <AuthContext.Provider value={{ userInfo, setUserInfo, logout, isAuthenticated, isOnboarded, isCreator, isBusiness }}>
       {children}
     </AuthContext.Provider>
   );

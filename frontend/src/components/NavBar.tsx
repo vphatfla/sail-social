@@ -6,7 +6,7 @@ import { useAuth } from '../contexts/AuthContext';
 const NavBar: React.FC = () => {
   const [scrolling, setScrolling] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const { isAuthenticated, logout } = useAuth();
+  const { isAuthenticated, isOnboarded, logout } = useAuth();
 
   const handleScroll = () => {
     if (window.scrollY > 50) {
