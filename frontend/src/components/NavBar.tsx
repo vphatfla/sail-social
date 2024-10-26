@@ -6,7 +6,7 @@ import { useAuth } from '../contexts/AuthContext';
 const NavBar: React.FC = () => {
   const [scrolling, setScrolling] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const { isAuthenticated, isOnboarded, logout } = useAuth();
+  const { isAuthenticated, logout } = useAuth();
 
   const handleScroll = () => {
     if (window.scrollY > 50) {
@@ -93,11 +93,13 @@ const NavBar: React.FC = () => {
             </NavLink>
           </div>
         </div>
-
+        
+        {/* For phones */}
         <div className="md:hidden">
           <FaBars className="text-2xl cursor-pointer" onClick={toggleMenu} />
         </div>
 
+        {/* For bigger screens */}
         <div className="hidden md:flex items-center space-x-4">
           {isAuthenticated() ? (
             <button
@@ -127,7 +129,8 @@ const NavBar: React.FC = () => {
           )}
         </div>
       </div>
-
+      
+      {/* For smaller screens */}
       <div
         className={`fixed top-0 right-0 w-full h-full bg-white flex flex-col justify-center items-center space-y-6 transform ${
           menuOpen ? 'translate-x-0' : 'translate-x-full'
