@@ -57,7 +57,6 @@ const SignUp: React.FC = () => {
       localStorage.setItem('BoosterHubToken', token);
 
       const decodedInfo = decryptToken(token);
-      console.log(decodedInfo)
       setUserInfo(decodedInfo);
 
       navigate('/');

@@ -12,6 +12,9 @@ interface AuthContextType {
   isBusiness: () => boolean;
 }
 
+const CREATOR: string = "creator";
+const BUSINESS: string = "business";
+
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -47,11 +50,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }
 
   const isCreator = () => {
-    return true
+    return userInfo["typeUser"] === CREATOR
   }
 
   const isBusiness = () => {
-    return true
+    return userInfo["typeUser"] === BUSINESS
   }
 
   return (
