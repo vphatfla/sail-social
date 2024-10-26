@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { useAuth } from '../contexts/AuthContext';
 import { decryptToken } from '../utils/TokenUtils';
 import { useNavigate } from 'react-router-dom';
-import { callApi } from '../utils/ApiUtils';
+import { useApi } from '../utils/ApiUtils';
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState<string>('');
@@ -11,6 +11,7 @@ const Login: React.FC = () => {
   const [userType, setUserType] = useState<string>('creator');
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const { setUserInfo, isAuthenticated } = useAuth();
+  const { callApi } = useApi();
   const navigate = useNavigate();
 
   if (isAuthenticated()) {

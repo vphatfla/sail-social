@@ -3,13 +3,14 @@ import { motion } from 'framer-motion';
 import { useAuth } from '../contexts/AuthContext';
 import { decryptToken } from '../utils/TokenUtils';
 import { useNavigate } from 'react-router-dom';
-import { callApi } from '../utils/ApiUtils';
+import { useApi } from '../utils/ApiUtils';
 
 const SignUp: React.FC = () => {
   const [userType, setUserType] = useState<string>('creator');
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const { setUserInfo, isAuthenticated } = useAuth();
+  const { callApi } = useApi();
   const navigate = useNavigate();
 
   if (isAuthenticated()) {
