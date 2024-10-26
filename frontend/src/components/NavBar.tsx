@@ -50,48 +50,52 @@ const NavBar: React.FC = () => {
           >
             Booster Hub
           </NavLink>
-          <div className="hidden md:flex space-x-4">
-            <NavLink 
-              to="/learn" 
-              className={({ isActive }) =>
-                `transition-colors ${
-                  isActive ? 'text-blue-500 border-b-2 border-blue-500' : 'text-gray-700 hover:text-blue-500'
-                }`
-              }
-            >
-              Learn
-            </NavLink>
-            <NavLink 
-              to="/business" 
-              className={({ isActive }) =>
-                `transition-colors ${
-                  isActive ? 'text-blue-500 border-b-2 border-blue-500' : 'text-gray-700 hover:text-blue-500'
-                }`
-              }
-            >
-              Business
-            </NavLink>
-            <NavLink 
-              to="/creators" 
-              className={({ isActive }) =>
-                `transition-colors ${
-                  isActive ? 'text-blue-500 border-b-2 border-blue-500' : 'text-gray-700 hover:text-blue-500'
-                }`
-              }
-            >
-              Creators
-            </NavLink>
-            <NavLink 
-              to="/pricing" 
-              className={({ isActive }) =>
-                `transition-colors ${
-                  isActive ? 'text-blue-500 border-b-2 border-blue-500' : 'text-gray-700 hover:text-blue-500'
-                }`
-              }
-            >
-              Pricing
-            </NavLink>
-          </div>
+          {
+            !isAuthenticated() && (
+              <div className="hidden md:flex space-x-4">
+                <NavLink 
+                  to="/learn" 
+                  className={({ isActive }) =>
+                    `transition-colors ${
+                      isActive ? 'text-blue-500 border-b-2 border-blue-500' : 'text-gray-700 hover:text-blue-500'
+                    }`
+                  }
+                >
+                  Learn
+                </NavLink>
+                <NavLink 
+                  to="/business" 
+                  className={({ isActive }) =>
+                    `transition-colors ${
+                      isActive ? 'text-blue-500 border-b-2 border-blue-500' : 'text-gray-700 hover:text-blue-500'
+                    }`
+                  }
+                >
+                  Business
+                </NavLink>
+                <NavLink 
+                  to="/creators" 
+                  className={({ isActive }) =>
+                    `transition-colors ${
+                      isActive ? 'text-blue-500 border-b-2 border-blue-500' : 'text-gray-700 hover:text-blue-500'
+                    }`
+                  }
+                >
+                  Creators
+                </NavLink>
+                <NavLink 
+                  to="/pricing" 
+                  className={({ isActive }) =>
+                    `transition-colors ${
+                      isActive ? 'text-blue-500 border-b-2 border-blue-500' : 'text-gray-700 hover:text-blue-500'
+                    }`
+                  }
+                >
+                  Pricing
+                </NavLink>
+              </div>
+            )
+          }
         </div>
         
         {/* For phones */}
@@ -137,50 +141,66 @@ const NavBar: React.FC = () => {
         } transition-transform duration-500 ease-in-out`}
       >
         <FaTimes className="absolute top-5 right-5 text-3xl cursor-pointer" onClick={toggleMenu} />
-        <NavLink 
-          to="/learn" 
-          className={({ isActive }) =>
-            `transition-colors ${
-              isActive ? 'text-blue-500 border-b-2 border-blue-500' : 'text-gray-700 hover:text-blue-500'
-            }`
-          }
-          onClick={toggleMenu}
-        >
-          Learn
-        </NavLink>
-        <NavLink 
-          to="/business" 
-          className={({ isActive }) =>
-            `transition-colors ${
-              isActive ? 'text-blue-500 border-b-2 border-blue-500' : 'text-gray-700 hover:text-blue-500'
-            }`
-          }
-          onClick={toggleMenu}
-        >
-          Business
-        </NavLink>
-        <NavLink 
-          to="/creators" 
-          className={({ isActive }) =>
-            `transition-colors ${
-              isActive ? 'text-blue-500 border-b-2 border-blue-500' : 'text-gray-700 hover:text-blue-500'
-            }`
-          }
-          onClick={toggleMenu}
-        >
-          Creators
-        </NavLink>
-        <NavLink 
-          to="/pricing" 
-          className={({ isActive }) =>
-            `transition-colors ${
-              isActive ? 'text-blue-500 border-b-2 border-blue-500' : 'text-gray-700 hover:text-blue-500'
-            }`
-          }
-          onClick={toggleMenu}
-        >
-          Pricing
-        </NavLink>
+        {
+          !isAuthenticated() && (
+            <NavLink 
+              to="/learn" 
+              className={({ isActive }) =>
+                `transition-colors ${
+                  isActive ? 'text-blue-500 border-b-2 border-blue-500' : 'text-gray-700 hover:text-blue-500'
+                }`
+              }
+              onClick={toggleMenu}
+            >
+              Learn
+            </NavLink>
+          )
+        }
+        {
+          !isAuthenticated() && (
+            <NavLink 
+              to="/business" 
+              className={({ isActive }) =>
+                `transition-colors ${
+                  isActive ? 'text-blue-500 border-b-2 border-blue-500' : 'text-gray-700 hover:text-blue-500'
+                }`
+              }
+              onClick={toggleMenu}
+            >
+              Business
+            </NavLink>
+          )
+        }
+        {
+          !isAuthenticated() && (
+            <NavLink 
+              to="/creators" 
+              className={({ isActive }) =>
+                `transition-colors ${
+                  isActive ? 'text-blue-500 border-b-2 border-blue-500' : 'text-gray-700 hover:text-blue-500'
+                }`
+              }
+              onClick={toggleMenu}
+            >
+              Creators
+            </NavLink>
+          )
+        }
+        {
+          !isAuthenticated() && (
+            <NavLink 
+            to="/pricing" 
+            className={({ isActive }) =>
+              `transition-colors ${
+                isActive ? 'text-blue-500 border-b-2 border-blue-500' : 'text-gray-700 hover:text-blue-500'
+              }`
+            }
+            onClick={toggleMenu}
+          >
+            Pricing
+          </NavLink>
+          )
+        }
 
         {isAuthenticated() ? (
           <button
