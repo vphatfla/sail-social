@@ -44,7 +44,7 @@ const NavBar: React.FC = () => {
             to="/"
             className={({ isActive }) =>
               `text-2xl font-bold transition-colors ${
-                isActive ? 'text-blue-500' : 'text-black hover:text-blue-500'
+                (isActive || isAuthenticated()) ? 'text-blue-500' : 'text-black hover:text-blue-500'
               }`
             }
           >
