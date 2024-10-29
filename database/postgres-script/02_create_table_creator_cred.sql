@@ -5,5 +5,6 @@ CREATE TABLE "creator_credential" (
 	email VARCHAR(255) UNIQUE, 
 	password BYTEA,
 	phone_number VARCHAR(20), 
-	is_verified BOOLEAN DEFAULT FALSE
+	is_verified BOOLEAN DEFAULT FALSE,
+    is_onboarded BOOLEAN DEFAULT FALSE
 );

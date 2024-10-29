@@ -11,12 +11,13 @@ import (
 // Define a secret key for signing tokens
 var secretKey = []byte("your-secret-key")
 
-func GenerateJWTToken(userId int, typeUser string) (string, error) {
+func GenerateJWTToken(userId int, typeUser string, is_onboarded bool) (string, error) {
 	// claims
 	claims := jwt.MapClaims{
-		"userId":   strconv.Itoa(int(userId)), // convert to string
-		"typeUser": typeUser,
-		"exp":      time.Now().Add(time.Hour * 24).Unix(),
+		"userId":      strconv.Itoa(int(userId)), // convert to string
+		"typeUser":    typeUser,
+		"isOnboarded": is_onboarded,
+		"exp":         time.Now().Add(time.Hour * 24).Unix(),
 	}
 
 	// create token

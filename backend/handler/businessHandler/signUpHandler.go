@@ -68,7 +68,7 @@ func SignUpHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	token, err := jwtToken.GenerateJWTToken(id, "business")
+	token, err := jwtToken.GenerateJWTToken(id, "business", false)
 	if err != nil {
 		w.WriteHeader(400)
 		json.NewEncoder(w).Encode(customError.ErrorMessage{Message: "Token : " + err.Error()})
