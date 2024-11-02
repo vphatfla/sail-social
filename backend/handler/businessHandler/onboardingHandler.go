@@ -3,6 +3,7 @@ package businessHandler
 import (
 	"encoding/json"
 	"net/http"
+	"vphatlfa/booster-hub/auth/jwtToken"
 	customError "vphatlfa/booster-hub/customError"
 	"vphatlfa/booster-hub/db/businessQuery"
 	"vphatlfa/booster-hub/model"
@@ -36,8 +37,9 @@ func OnboadingHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// insert record
+	// update is_onboarded record
 
-	id, err := businessQuery.InsertNewInfoRecord(businessInfo)
+	id, err := businessQuery.InsertNewInfoRecordAndUpdateOnBoardingStatus(businessInfo)
 
 	if err != nil {
 		w.WriteHeader(400)
@@ -45,6 +47,20 @@ func OnboadingHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// token
+	token, err := jwtToken.GenerateJWTToken(id, "business", true)
+
+	if err != nil {
+		w.WriteHeader(400)
+		json.NewEncoder(w).Encode(customError.ErrorMessage{Message: "Token : " + err.Error()})
+		return
+	}
+
+	response := map[string]interface{}{
+		"id":    id,
+		"token": token,
+	}
+
 	w.WriteHeader(200)
-	json.NewEncoder(w).Encode(map[string]int{"id": id})
+	json.NewEncoder(w).Encode(response)
 }
