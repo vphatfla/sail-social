@@ -49,7 +49,7 @@ func GetAllPostWithCondition(bid *int, city, state, country, zipcode *string) ([
 		WHERE (COALESCE($1, p.business_id) = p.business_id)
 		AND (COALESCE($2, b.city) = b.city)
 		AND (COALESCE($3, b.state) = b.state)
-		AND (COALESCE($4, b.county) = b.country)
+		AND (COALESCE($4, b.country) = b.country)
 		AND (COALESCE($5, b.zipcode) = b.zipcode)
 
 	`
