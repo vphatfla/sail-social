@@ -21,8 +21,8 @@ func InsertNewInfoRecordAndUpdateOnBoardingStatus(businessInfo model.BusinessInf
 		}
 	}()
 
-	err = tx.QueryRow(context.Background(), "INSERT INTO business_info (id, email, phone_number, first_name, last_name, introduction, address, zipcode, business_name, business_type) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING id;",
-		businessInfo.ID, businessInfo.Email, businessInfo.PhoneNumber, businessInfo.FirstName, businessInfo.LastName, businessInfo.Introduction, businessInfo.Address, businessInfo.Zipcode, businessInfo.BusinessName, businessInfo.BusinessType).Scan(&id)
+	err = tx.QueryRow(context.Background(), "INSERT INTO business_info (id, email, phone_number, first_name, last_name, introduction, address, zipcode, business_name, business_type, city, state, country) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13) RETURNING id;",
+		businessInfo.ID, businessInfo.Email, businessInfo.PhoneNumber, businessInfo.FirstName, businessInfo.LastName, businessInfo.Introduction, businessInfo.Address, businessInfo.Zipcode, businessInfo.BusinessName, businessInfo.BusinessType, businessInfo.City, businessInfo.State, businessInfo.Country).Scan(&id)
 
 	if err != nil {
 		return id, err

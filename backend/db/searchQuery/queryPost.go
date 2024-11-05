@@ -41,7 +41,11 @@ func GetAllPost() ([]model.Post, error) {
 
 func GetAllPostWithCondition(bid *int, city, state, country, zipcode *string) ([]model.Post, error) {
 	var listPost []model.Post
-
+	var params map[string]interface{} {
+		"bid": bid,
+		"city": city,
+		councountry
+	}
 	query := `
 		SELECT p.*
 		FROM post p
