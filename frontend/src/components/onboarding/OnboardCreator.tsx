@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
-// import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
 import { useApi } from '../../utils/ApiUtils';
-// import { decryptToken } from '../../utils/TokenUtils';
+import { decryptToken } from '../../utils/TokenUtils';
 import { useAuth } from '../../contexts/AuthContext';
 
 
 const OnboardCreator: React.FC = () => {
     const 
     { 
-        // setUserInfo, 
+        setUserInfo, 
         userInfo 
     } = useAuth();
     const [creatorInfo, setCreatorInfo] = useState({
@@ -26,7 +26,7 @@ const OnboardCreator: React.FC = () => {
     });
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
     const { callApi } = useApi();
-//   const navigate = useNavigate();
+  const navigate = useNavigate();
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
@@ -44,14 +44,13 @@ const OnboardCreator: React.FC = () => {
         setErrorMessage(response.error || 'Onboarding failed, please try again.');
         } else {
             console.log(response)
-        //   const token = response.data.token;
-        //   localStorage.setItem('BoosterHubToken', token);
+          const token = response.data.token;
+          localStorage.setItem('BoosterHubToken', token);
 
-        //   const decodedInfo = decryptToken(token);
-        //   console.log(decodedInfo);
-        //   setUserInfo(decodedInfo);
+          const decodedInfo = decryptToken(token);
+          setUserInfo(decodedInfo);
 
-        //   navigate('/');
+          navigate('/');
         }
     };
 

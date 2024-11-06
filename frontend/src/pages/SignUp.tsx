@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useAuth } from '../contexts/AuthContext';
 import { decryptToken } from '../utils/TokenUtils';
@@ -12,6 +12,11 @@ const SignUp: React.FC = () => {
   const { setUserInfo, isAuthenticated } = useAuth();
   const { callApi } = useApi();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    localStorage.removeItem('BoosterHubToken');
+    setUserInfo(null)
+  }, [])
 
   if (isAuthenticated()) {
     navigate('/');
