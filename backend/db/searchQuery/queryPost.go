@@ -2,6 +2,9 @@ package searchQuery
 
 import (
 	"context"
+	"fmt"
+	"reflect"
+	"strings"
 	"vphatlfa/booster-hub/db"
 	"vphatlfa/booster-hub/model"
 )
@@ -41,23 +44,42 @@ func GetAllPost() ([]model.Post, error) {
 
 func GetAllPostWithCondition(bid *int, city, state, country, zipcode *string) ([]model.Post, error) {
 	var listPost []model.Post
-	var params map[string]interface{} {
-		"bid": bid,
-		"city": city,
-		councountry
-	}
-	query := `
-		SELECT p.*
-		FROM post p
-		JOIN business_info b ON p.business_id = b.id
-		WHERE (COALESCE($1, p.business_id) = p.business_id)
-		AND (COALESCE($2, b.city) = b.city)
-		AND (COALESCE($3, b.state) = b.state)
-		AND (COALESCE($4, b.country) = b.country)
-		AND (COALESCE($5, b.zipcode) = b.zipcode)
+	var queryBuilder strings.Builder
+	queryBuilder.WriteString("SELECT p.* FROM post p JOIN business_info b ON p.business_id = b.id")
 
-	`
-	rows, err := db.DBPool.Query(context.Background(), query, bid, city, state, country, zipcode)
+	// dynamically use the variable
+
+	params := map[string]interface{}{
+		"bid":     bid,
+		"city":    city,
+		"state":   state,
+		"country": country,
+		"zipcode": zipcode,
+	}
+
+	var conditionList []string
+	var paramList []any
+
+	fmt.Println(params["bid"] == nil)
+	counter := 0
+	for key, value := range params {
+		if !reflect.ValueOf(value).IsNil() {
+			conditionList = append(conditionList, fmt.Sprintf("%s=$%d ", key, counter))
+			paramList = append(paramList, value)
+		}
+	}
+
+	if len(conditionList) != 0 {
+		queryBuilder.WriteString(" WHERE ")
+		queryBuilder.WriteString(strings.Join(conditionList, " AND "))
+	}
+
+	queryBuilder.WriteString(";")
+
+	fmt.Println(queryBuilder.String())
+
+	rows, err := db.DBPool.Query(context.Background(), queryBuilder.String(), paramList...)
+
 	if err != nil {
 		return nil, err
 	}
