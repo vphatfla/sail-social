@@ -1,0 +1,9 @@
+services:
+  postgres-db:
+    build:
+      context: .  
+      dockerfile: Dockerfile
+    image: postgres-db-img
+    container_name: postgres-db-ctn
+    ports:
+      - "5432:5432"   
