@@ -3,7 +3,6 @@ package searchQuery
 import (
 	"context"
 	"fmt"
-	"reflect"
 	"strings"
 	"vphatlfa/booster-hub/db"
 	"vphatlfa/booster-hub/model"
@@ -50,20 +49,35 @@ func GetAllPostWithCondition(bid *int, city, state, country, zipcode *string) ([
 	// dynamically use the variable
 
 	params := map[string]interface{}{
-		"bid":     bid,
-		"city":    city,
-		"state":   state,
-		"country": country,
-		"zipcode": zipcode,
+		"business_id": nil,
+		"city":        nil,
+		"state":       nil,
+		"country":     nil,
+		"zipcode":     nil,
+	}
+
+	if bid != nil {
+		params["business_id"] = *bid
+	}
+	if city != nil {
+		params["city"] = *city
+	}
+	if state != nil {
+		params["state"] = *state
+	}
+	if country != nil {
+		params["country"] = *country
+	}
+	if zipcode != nil {
+		params["zipcode"] = *zipcode
 	}
 
 	var conditionList []string
 	var paramList []any
 
-	fmt.Println(params["bid"] == nil)
-	counter := 0
+	counter := 1
 	for key, value := range params {
-		if !reflect.ValueOf(value).IsNil() {
+		if value != nil {
 			conditionList = append(conditionList, fmt.Sprintf("%s=$%d ", key, counter))
 			paramList = append(paramList, value)
 		}

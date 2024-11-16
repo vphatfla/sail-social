@@ -14,7 +14,7 @@ func generalRouter() http.Handler {
 	// private routes
 	r.Group(func(r chi.Router) {
 		r.Use(customMiddleware.JWTMiddleware)
-		r.Get("/get-post", getSearchHandler.GetPostHandler)
+		r.Get("/post", getSearchHandler.GetPostHandler)
 	})
 
 	return r
