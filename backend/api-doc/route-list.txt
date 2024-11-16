@@ -35,4 +35,11 @@ General route (can be used by both business or creator):
 
     Private routes (require bearer token):
         Get Post (with or without parameter): /post
+        Get Post Applied by a creator: /post-creator-applied
+        Get Post Saved by a creator: /post-creator-saved
+        Get Post created by a business: /post-business
+
+        Get a list of creator (options with param): /creator-search
+
+        Get a list of business (options with param): /business-search
 
