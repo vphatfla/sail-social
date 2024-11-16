@@ -15,6 +15,9 @@ func generalRouter() http.Handler {
 	r.Group(func(r chi.Router) {
 		r.Use(customMiddleware.JWTMiddleware)
 		r.Get("/post", getSearchHandler.GetPostHandler)
+		r.Get("/post-creator-applied", getSearchHandler.GetPostAppliedByCreatorHandler)
+		r.Get("/post-creator-saved", getSearchHandler.GetPostSavedByCreatorHandler)
+		r.Get("/post-business", getSearchHandler.GetPostByBusinessHandler)
 	})
 
 	return r

@@ -99,6 +99,10 @@ func GetAllPostWithCondition(bid *int, city, state, country, zipcode *string) ([
 	}
 	defer rows.Close()
 
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+
 	for rows.Next() {
 		var post model.Post
 		if err := rows.Scan(
@@ -115,9 +119,108 @@ func GetAllPostWithCondition(bid *int, city, state, country, zipcode *string) ([
 		listPost = append(listPost, post)
 	}
 
+	return listPost, err
+}
+
+func GetPostAppliedByCreator(cid int) ([]model.CreaterPostApplied, error) {
+	var listPost []model.CreaterPostApplied
+	query := "SELECT p.*, cpa.message FROM post p JOIN creator_post_applied cpa ON p.id = cpa.post_id WHERE cpa.creator_id = $1;"
+
+	rows, err := db.DBPool.Query(context.Background(), query, cid)
+
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
 	if err := rows.Err(); err != nil {
 		return nil, err
 	}
 
-	return listPost, err
+	for rows.Next() {
+		var post model.CreaterPostApplied
+		if err := rows.Scan(
+			&post.ID,
+			&post.BusinessID,
+			&post.CreatedAt,
+			&post.Content,
+			&post.PayAmount,
+			&post.IsActive,
+			&post.WorkTime,
+			&post.Message,
+		); err != nil {
+			return nil, err
+		}
+		listPost = append(listPost, post)
+	}
+
+	return listPost, nil
+}
+
+func GetPostSavedByCreator(cid int) ([]model.Post, error) {
+	var listPost []model.Post
+	query := "SELECT * FROM post p JOIN creator_post_saved cps ON cps.post_id = p.id WHERE cps.creator_id = $1;"
+
+	rows, err := db.DBPool.Query(context.Background(), query, cid)
+
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+
+	for rows.Next() {
+		var post model.Post
+		if err := rows.Scan(
+			&post.ID,
+			&post.BusinessID,
+			&post.CreatedAt,
+			&post.Content,
+			&post.PayAmount,
+			&post.IsActive,
+			&post.WorkTime,
+		); err != nil {
+			return nil, err
+		}
+		listPost = append(listPost, post)
+	}
+
+	return listPost, nil
+}
+
+func GetPostByBusiness(bid int) ([]model.Post, error) {
+	var listPost []model.Post
+	query := "SELECT * FROM post WHERE business_id = $1;"
+
+	rows, err := db.DBPool.Query(context.Background(), query, bid)
+
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+
+	for rows.Next() {
+		var post model.Post
+		if err := rows.Scan(
+			&post.ID,
+			&post.BusinessID,
+			&post.CreatedAt,
+			&post.Content,
+			&post.PayAmount,
+			&post.IsActive,
+			&post.WorkTime,
+		); err != nil {
+			return nil, err
+		}
+		listPost = append(listPost, post)
+	}
+
+	return listPost, nil
 }

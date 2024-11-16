@@ -25,8 +25,8 @@ func creatorRouter() http.Handler {
 		r.Get("/test", creatorHandler.TestHandler)
 		r.Post("/onboarding", creatorHandler.OnboadingHandler)
 		r.Post("/portfolio-new", creatorHandler.PostNewPortfolioHandler)
-		r.Post("/apply-new", postHandler.NewApplyToPostHandler)
-		r.Post("/apply-update", postHandler.UpdateApplyToPostHandler)
+		r.Post("/post-apply", postHandler.NewApplyToPostHandler)
+		r.Post("/post-update", postHandler.UpdateApplyToPostHandler)
 	})
 	return r
 }

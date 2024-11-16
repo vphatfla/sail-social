@@ -10,4 +10,7 @@ type CreatorInfo struct {
 	AvtLink      string `json:"avtLink,omitempty"`
 	Address      string `json:"address"`
 	Zipcode      string `json:"zipcode"`
+	City         string `json:"city"`
+	State        string `json:"state"`
+	Country      string `json:"country"`
 }

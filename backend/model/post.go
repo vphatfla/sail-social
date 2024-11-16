@@ -11,3 +11,8 @@ type Post struct {
 	IsActive   bool      `json:"isActive" db:"is_active"`
 	WorkTime   string    `json:"workTime" db:"work_time"`
 }
+
+type CreaterPostApplied struct {
+	Post
+	Message string `json:"message"`
+}
