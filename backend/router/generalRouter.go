@@ -18,6 +18,10 @@ func generalRouter() http.Handler {
 		r.Get("/post-creator-applied", getSearchHandler.GetPostAppliedByCreatorHandler)
 		r.Get("/post-creator-saved", getSearchHandler.GetPostSavedByCreatorHandler)
 		r.Get("/post-business", getSearchHandler.GetPostByBusinessHandler)
+		// search-get creator
+		r.Get("/creator-search", getSearchHandler.GetCreatorHandler)
+		// search-get business
+		r.Get("/business-search", getSearchHandler.GetBusinessHandler)
 	})
 
 	return r
