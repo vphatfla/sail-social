@@ -21,8 +21,8 @@ func InsertNewInfoRecordAndUpdateOnBoardingStatus(creatorInfo model.CreatorInfo)
 		}
 	}()
 
-	err = tx.QueryRow(context.Background(), "INSERT INTO creator_info (id, email, phone_number, first_name, last_name, introduction, address, zipcode) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING id;",
-		creatorInfo.ID, creatorInfo.Email, creatorInfo.PhoneNumber, creatorInfo.FirstName, creatorInfo.LastName, creatorInfo.Introduction, creatorInfo.Address, creatorInfo.Zipcode).Scan(&id)
+	err = tx.QueryRow(context.Background(), "INSERT INTO creator_info (id, email, phone_number, first_name, last_name, introduction, address, zipcode, city, state, country) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11) RETURNING id;",
+		creatorInfo.ID, creatorInfo.Email, creatorInfo.PhoneNumber, creatorInfo.FirstName, creatorInfo.LastName, creatorInfo.Introduction, creatorInfo.Address, creatorInfo.Zipcode, creatorInfo.City, creatorInfo.State, creatorInfo.Country).Scan(&id)
 
 	if err != nil {
 		return id, err

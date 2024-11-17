@@ -1,0 +1,45 @@
+Port: 3000
+Host: localhost
+Prefix: api
+
+Example: localhost:3000/api/helloworld
+
+To test the backend: GET /helloworld
+
+For creator: prefix: creator, exaple route: localhost:3000/api/creator/test
+    Public routes:
+        Testing: GET /
+        Sign up: POST /sign-up
+        Log In: POST /log-in
+    Private routes (need bearer token obtained from log-in):
+        Testing: GET /test
+        New-onboarding: POST /onboarding
+        Create new portfolio: POST /portfolio-new
+        Apply to a job posting: POST /apply-new
+        Update to a job posting (unapply): POST /apply-update
+
+For business: prefix: business, example route: localhost:3000/api/business/test
+    Public routes:
+        Testing: GET /
+        Sign up: POST /sign-up
+        Log In: POST /log-in
+    Private routes (need bearer token obtained from log-in):
+       Testing: GET /test
+       New-onboarding: POST /onboarding
+       Create new portfolio: POST /portfolio-new
+       Create new post: POST /post-new
+       Update the post (edit): POST /post-update
+
+General route (can be used by both business or creator):
+    prefix: /general, example: localhost:3000/api/general/post
+
+    Private routes (require bearer token):
+        Get Post (with or without parameter): /post
+        Get Post Applied by a creator: /post-creator-applied
+        Get Post Saved by a creator: /post-creator-saved
+        Get Post created by a business: /post-business
+
+        Get a list of creator (options with param): /creator-search
+
+        Get a list of business (options with param): /business-search
+
