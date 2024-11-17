@@ -11,5 +11,8 @@ CREATE TABLE "business_info" (
     introduction TEXT,                              
     avt_link TEXT,                                   
     address VARCHAR(255),                            
-    zipcode VARCHAR(10)                              
+    zipcode VARCHAR(10),
+    city VARCHAR(255),
+    state VARCHAR(255),
+    country varchar(255)
 );
