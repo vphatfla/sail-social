@@ -34,17 +34,15 @@ const NavBar: React.FC = () => {
 
   return (
     <nav
-      className={`w-full fixed top-0 z-50 transition-all duration-300 ${
-        scrolling ? 'bg-white shadow-lg' : 'bg-transparent'
-      }`}
+      className={`w-full fixed top-0 z-50 transition-all duration-300 ${scrolling ? 'bg-white shadow-lg' : 'bg-transparent'
+        }`}
     >
       <div className="container mx-auto py-3 flex justify-between items-center">
         <div className="flex items-center space-x-8">
-          <NavLink 
+          <NavLink
             to="/"
             className={({ isActive }) =>
-              `text-2xl font-bold transition-colors ${
-                (isActive || isAuthenticated()) ? 'text-blue-500' : 'text-black hover:text-blue-500'
+              `text-2xl font-bold transition-colors ${(isActive || isAuthenticated()) ? 'text-blue-500' : 'text-black hover:text-blue-500'
               }`
             }
           >
@@ -53,41 +51,37 @@ const NavBar: React.FC = () => {
           {
             !isAuthenticated() && (
               <div className="hidden md:flex space-x-4">
-                <NavLink 
-                  to="/learn" 
+                <NavLink
+                  to="/learn"
                   className={({ isActive }) =>
-                    `transition-colors ${
-                      isActive ? 'text-blue-500 border-b-2 border-blue-500' : 'text-gray-700 hover:text-blue-500'
+                    `transition-colors ${isActive ? 'text-blue-500 border-b-2 border-blue-500' : 'text-gray-700 hover:text-blue-500'
                     }`
                   }
                 >
                   Learn
                 </NavLink>
-                <NavLink 
-                  to="/business" 
+                <NavLink
+                  to="/business"
                   className={({ isActive }) =>
-                    `transition-colors ${
-                      isActive ? 'text-blue-500 border-b-2 border-blue-500' : 'text-gray-700 hover:text-blue-500'
+                    `transition-colors ${isActive ? 'text-blue-500 border-b-2 border-blue-500' : 'text-gray-700 hover:text-blue-500'
                     }`
                   }
                 >
                   Business
                 </NavLink>
-                <NavLink 
-                  to="/creators" 
+                <NavLink
+                  to="/creators"
                   className={({ isActive }) =>
-                    `transition-colors ${
-                      isActive ? 'text-blue-500 border-b-2 border-blue-500' : 'text-gray-700 hover:text-blue-500'
+                    `transition-colors ${isActive ? 'text-blue-500 border-b-2 border-blue-500' : 'text-gray-700 hover:text-blue-500'
                     }`
                   }
                 >
                   Creators
                 </NavLink>
-                <NavLink 
-                  to="/pricing" 
+                <NavLink
+                  to="/pricing"
                   className={({ isActive }) =>
-                    `transition-colors ${
-                      isActive ? 'text-blue-500 border-b-2 border-blue-500' : 'text-gray-700 hover:text-blue-500'
+                    `transition-colors ${isActive ? 'text-blue-500 border-b-2 border-blue-500' : 'text-gray-700 hover:text-blue-500'
                     }`
                   }
                 >
@@ -97,7 +91,7 @@ const NavBar: React.FC = () => {
             )
           }
         </div>
-        
+
         {/* For phones */}
         <div className="md:hidden">
           <FaBars className="text-2xl cursor-pointer" onClick={toggleMenu} />
@@ -114,40 +108,23 @@ const NavBar: React.FC = () => {
             </button>
           ) : (
             <>
-              <NavLink 
-                to="/login" 
-                className={({ isActive }) =>
-                  `transition-colors ${
-                    isActive ? 'text-blue-500 border-b-2 border-blue-500' : 'text-gray-700 hover:text-blue-500'
-                  }`
-                }
-              >
-                Login
-              </NavLink>
-              <NavLink to="/signup">
-                <button className="bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-600 transition-colors">
-                  Get in Touch
-                </button>
-              </NavLink>
             </>
           )}
         </div>
       </div>
-      
+
       {/* For smaller screens */}
       <div
-        className={`fixed top-0 right-0 w-full h-full bg-white flex flex-col justify-center items-center space-y-6 transform ${
-          menuOpen ? 'translate-x-0' : 'translate-x-full'
-        } transition-transform duration-500 ease-in-out`}
+        className={`fixed top-0 right-0 w-full h-full bg-white flex flex-col justify-center items-center space-y-6 transform ${menuOpen ? 'translate-x-0' : 'translate-x-full'
+          } transition-transform duration-500 ease-in-out`}
       >
         <FaTimes className="absolute top-5 right-5 text-3xl cursor-pointer" onClick={toggleMenu} />
         {
           !isAuthenticated() && (
-            <NavLink 
-              to="/learn" 
+            <NavLink
+              to="/learn"
               className={({ isActive }) =>
-                `transition-colors ${
-                  isActive ? 'text-blue-500 border-b-2 border-blue-500' : 'text-gray-700 hover:text-blue-500'
+                `transition-colors ${isActive ? 'text-blue-500 border-b-2 border-blue-500' : 'text-gray-700 hover:text-blue-500'
                 }`
               }
               onClick={toggleMenu}
@@ -158,11 +135,10 @@ const NavBar: React.FC = () => {
         }
         {
           !isAuthenticated() && (
-            <NavLink 
-              to="/business" 
+            <NavLink
+              to="/business"
               className={({ isActive }) =>
-                `transition-colors ${
-                  isActive ? 'text-blue-500 border-b-2 border-blue-500' : 'text-gray-700 hover:text-blue-500'
+                `transition-colors ${isActive ? 'text-blue-500 border-b-2 border-blue-500' : 'text-gray-700 hover:text-blue-500'
                 }`
               }
               onClick={toggleMenu}
@@ -173,11 +149,10 @@ const NavBar: React.FC = () => {
         }
         {
           !isAuthenticated() && (
-            <NavLink 
-              to="/creators" 
+            <NavLink
+              to="/creators"
               className={({ isActive }) =>
-                `transition-colors ${
-                  isActive ? 'text-blue-500 border-b-2 border-blue-500' : 'text-gray-700 hover:text-blue-500'
+                `transition-colors ${isActive ? 'text-blue-500 border-b-2 border-blue-500' : 'text-gray-700 hover:text-blue-500'
                 }`
               }
               onClick={toggleMenu}
@@ -188,17 +163,16 @@ const NavBar: React.FC = () => {
         }
         {
           !isAuthenticated() && (
-            <NavLink 
-            to="/pricing" 
-            className={({ isActive }) =>
-              `transition-colors ${
-                isActive ? 'text-blue-500 border-b-2 border-blue-500' : 'text-gray-700 hover:text-blue-500'
-              }`
-            }
-            onClick={toggleMenu}
-          >
-            Pricing
-          </NavLink>
+            <NavLink
+              to="/pricing"
+              className={({ isActive }) =>
+                `transition-colors ${isActive ? 'text-blue-500 border-b-2 border-blue-500' : 'text-gray-700 hover:text-blue-500'
+                }`
+              }
+              onClick={toggleMenu}
+            >
+              Pricing
+            </NavLink>
           )
         }
 
@@ -211,22 +185,6 @@ const NavBar: React.FC = () => {
           </button>
         ) : (
           <>
-            <NavLink 
-              to="/login" 
-              className={({ isActive }) =>
-                `transition-colors ${
-                  isActive ? 'text-blue-500 border-b-2 border-blue-500' : 'text-gray-700 hover:text-blue-500'
-                }`
-              }
-              onClick={toggleMenu}
-            >
-              Login
-            </NavLink>
-            <NavLink to="/signup" onClick={toggleMenu}>
-              <button className="bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-600 transition-colors">
-                Get in Touch
-              </button>
-            </NavLink>
           </>
         )}
       </div>
