@@ -15,13 +15,19 @@ const Pricing = React.lazy(() => import('./pages/Pricing'));
 const Login = React.lazy(() => import('./pages/Login'));
 const SignUp = React.lazy(() => import('./pages/SignUp'));
 
+// for creator pages
+const CreatorOnboarding = React.lazy(() => import('./pages/creator/Onboarding.tsx'));
+
 const MainPage: React.FC<{ location: Location }> = ({ location }) => {
   return (
     <Routes location={location} key={location.pathname}>
       <Route path="/" element={<Home />} />
       <Route path="/learn" element={<Learn />} />
       <Route path="/business" element={<Business />} />
+      
       <Route path="/creator" element={<Creator />} />
+      <Route path="/creator/onboarding" element={<CreatorOnboarding /> } /> 
+
       <Route path="/pricing" element={<Pricing />} />
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<SignUp />} />
