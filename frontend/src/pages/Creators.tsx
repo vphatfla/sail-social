@@ -10,7 +10,7 @@ const Creators: React.FC = () => {
       transition={{ duration: 0.5 }}
     >
       <h1>Creators</h1>
-      <p>Join Booster Hub creator community and collaborate with the world’s biggest brands.</p>
+      <p>Join Sail Social creator community and collaborate with the world’s biggest brands.</p>
     </motion.div>
   );
 };

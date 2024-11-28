@@ -14,7 +14,7 @@ const Home: React.FC = () => {
     >
       {/* Left Section */}
       <div className="flex-1 flex items-center justify-center">
-        <h1 className="text-5xl font-bold">Booster Hub</h1>
+        <h1 className="text-5xl font-bold">Sail Social</h1>
       </div>
 
       {/* Right Section */}

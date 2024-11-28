@@ -46,7 +46,7 @@ const NavBar: React.FC = () => {
               }`
             }
           >
-            Booster Hub
+            Sail Social
           </NavLink>
           {
             !isAuthenticated() && (
