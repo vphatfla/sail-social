@@ -10,10 +10,13 @@ import Onboarding from './components/onboarding/Onboarding';
 const Home = React.lazy(() => import('./pages/Home'));
 const Learn = React.lazy(() => import('./pages/Learn'));
 const Business = React.lazy(() => import('./pages/Business'));
-const Creators = React.lazy(() => import('./pages/Creators'));
+const Creator = React.lazy(() => import('./pages/creator/Home'));
 const Pricing = React.lazy(() => import('./pages/Pricing'));
 const Login = React.lazy(() => import('./pages/Login'));
 const SignUp = React.lazy(() => import('./pages/SignUp'));
+
+// for creator pages
+const CreatorOnboarding = React.lazy(() => import('./pages/creator/Onboarding.tsx'));
 
 const MainPage: React.FC<{ location: Location }> = ({ location }) => {
   return (
@@ -21,7 +24,10 @@ const MainPage: React.FC<{ location: Location }> = ({ location }) => {
       <Route path="/" element={<Home />} />
       <Route path="/learn" element={<Learn />} />
       <Route path="/business" element={<Business />} />
-      <Route path="/creators" element={<Creators />} />
+      
+      <Route path="/creator" element={<Creator />} />
+      <Route path="/creator/onboarding" element={<CreatorOnboarding /> } /> 
+
       <Route path="/pricing" element={<Pricing />} />
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<SignUp />} />
@@ -31,21 +37,21 @@ const MainPage: React.FC<{ location: Location }> = ({ location }) => {
 
 const App: React.FC = () => {
   const location = useLocation();
-  const {isOnboarded, isAuthenticated} = useAuth();
+  const { isOnboarded, isAuthenticated } = useAuth();
 
   return (
     <div>
       <NavBar />
       <div className='mt-24 container mx-auto'>
         <AnimatePresence mode='wait'>
-          <Suspense 
+          <Suspense
           // fallback={<div>Loading...</div>}
           >
-          {
-            isAuthenticated() ? 
-              (isOnboarded() ? <MainPage location={location}/> : <Onboarding/>) 
-              : <MainPage location={location}/>
-          }
+            {
+              isAuthenticated() ?
+                (isOnboarded() ? <MainPage location={location} /> : <Onboarding />)
+                : <MainPage location={location} />
+            }
           </Suspense>
         </AnimatePresence>
       </div>
