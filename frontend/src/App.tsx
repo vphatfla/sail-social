@@ -9,7 +9,7 @@ import Onboarding from './components/onboarding/Onboarding';
 
 const Home = React.lazy(() => import('./pages/Home'));
 const Learn = React.lazy(() => import('./pages/Learn'));
-const Business = React.lazy(() => import('./pages/Business'));
+const Business = React.lazy( () => import('./pages/business/Home'));
 const Creator = React.lazy(() => import('./pages/creator/Home'));
 const Pricing = React.lazy(() => import('./pages/Pricing'));
 const Login = React.lazy(() => import('./pages/Login'));
@@ -23,6 +23,7 @@ const MainPage: React.FC<{ location: Location }> = ({ location }) => {
     <Routes location={location} key={location.pathname}>
       <Route path="/" element={<Home />} />
       <Route path="/learn" element={<Learn />} />
+
       <Route path="/business" element={<Business />} />
       
       <Route path="/creator" element={<Creator />} />
