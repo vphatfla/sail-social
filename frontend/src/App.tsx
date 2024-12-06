@@ -19,7 +19,7 @@ const CreatorFeed = React.lazy(() => import('./pages/creator/Feed.tsx'));
 
 // for business pages
 const BusinessOnboarding = React.lazy(() => import('./pages/business/Onboarding.tsx'));
-
+const BusinessFeed = React.lazy(() => import('./pages/business/Feed.tsx'));
 
 const MainPage: React.FC<{ location: Location }> = ({ location }) => {
   return (
@@ -29,6 +29,7 @@ const MainPage: React.FC<{ location: Location }> = ({ location }) => {
 
       <Route path="/business" element={<Business />} />
       <Route path="/business/onboarding" element={<BusinessOnboarding />} />
+      <Route path="/business/feed" element={<BusinessFeed />} />
 
       <Route path="/creator" element={<Creator />} />
       <Route path="/creator/onboarding" element={<CreatorOnboarding />} />

@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import config from '../../config/config';
 
 const SignUp: React.FC = () => {
     // default values for testing
@@ -7,13 +7,13 @@ const SignUp: React.FC = () => {
     const defaultPhone = "123-456-7891"
     const defaultPassword = "123456"
 
-    const url = import.meta.env.VITE_SERVER_URL
+
     const [email, setEmail] = useState(defaultEmail);
     const [phone, setPhone] = useState(defaultPhone);
     const [password, setPassword] = useState(defaultPassword);
     const [confirmPassword, setConfirmPassword] = useState(defaultPassword);
     const [error, setError] = useState('');
-    const navigate = useNavigate();
+
 
 
 
@@ -47,22 +47,24 @@ const SignUp: React.FC = () => {
         e.preventDefault();
         setError(''); // Clear any previous errors
 
-        try {
-            const response = await fetch(url + '/api/creator/sign-up', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email, phone, password }),
-            });
+        const res = await (fetch(config.SERVER_URL + '/business/sign-up', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                'email': email,
+                'password': password,
+                'phoneNumber': phone
+            })
+        }));
 
-            if (!response.ok) {
-                const data = await response.json();
-                throw new Error(data.error || 'Something went wrong.');
-            }
-
-            navigate('/creator'); // Redirect to Creator page on success
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        } catch (err: any) {
-            setError(err.message);
+        console.log('res = ', res);
+        if (!res.ok) {
+            console.log('Sign-up FAILED');
+        } else {
+            const data = await res.json();
+            localStorage.setItem('jwtToken', data.token)
         }
     };
 
