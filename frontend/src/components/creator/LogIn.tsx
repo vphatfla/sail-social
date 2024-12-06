@@ -1,12 +1,18 @@
 import React, { useState } from "react";
+import config from "../../config/config";
+import decodeToken from "../../utils/TokenUtils";
+import { useNavigate } from "react-router-dom";
+
 
 const LoginForm: React.FC = () => {
+  const navigate = useNavigate();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isEmailValid, setIsEmailValid] = useState(true);
   const [error, setError] = useState("");
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email.includes("@")) {
       setIsEmailValid(false);
@@ -17,7 +23,39 @@ const LoginForm: React.FC = () => {
     setError("");
 
     // Handle login logic here
-    console.log("Logged in with:", { email, password });
+    console.log("Logging in with:", { email, password });
+
+    const res = await (fetch(config.SERVER_URL + '/creator/log-in', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        'email': email,
+        'password': password
+      })
+    }));
+
+    console.log('res = ', res);
+
+    if (!res.ok) {
+      console.log('LOGIN FAILED')
+    } else {
+      const data = await res.json();
+      localStorage.setItem('token', data.token);
+
+      // decode and decide
+      const decodedPL = decodeToken(data.token);
+      if (decodedPL !== null) {
+        Object.entries(decodedPL).forEach(([key, value]) => {
+          localStorage.setItem(key, value + '')
+        })
+      }
+
+      if (decodedPL.isOnboarded) {
+        navigate('/creator/feed');
+      } else navigate('/creator/onboarding');
+    }
   };
 
   const isFormValid = email && password && isEmailValid;
@@ -32,9 +70,8 @@ const LoginForm: React.FC = () => {
           Email
         </label>
         <input
-          className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
-            isEmailValid || !email ? "" : "border-red-500"
-          }`}
+          className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${isEmailValid || !email ? "" : "border-red-500"
+            }`}
           id="email"
           type="email"
           placeholder="example123@gmail.com"
@@ -68,11 +105,10 @@ const LoginForm: React.FC = () => {
       <div className="mb-4">
         <button
           type="submit"
-          className={`${
-            isFormValid
-              ? "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
-              : "bg-blue-500 text-white font-bold py-2 px-4 rounded opacity-50 cursor-not-allowed w-full"
-          }`}
+          className={`${isFormValid
+            ? "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
+            : "bg-blue-500 text-white font-bold py-2 px-4 rounded opacity-50 cursor-not-allowed w-full"
+            }`}
           disabled={!isFormValid}
         >
           Log In
