@@ -1,12 +1,11 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import SignUp from '../../components/business/SignUp'; 
-import Login from '../../components/business/LogIn'; 
+import SignUp from '../../components/business/SignUp';
+import Login from '../../components/business/LogIn';
 
 const BusinessHome: React.FC = () => {
     const [isSignUp, setIsSignUp] = useState(true); // To toggle between SignUp and Login
-   
+
     return (
         <motion.div
             initial={{ opacity: 0, x: -100 }}
@@ -25,13 +24,13 @@ const BusinessHome: React.FC = () => {
             <div className="flex-1 flex flex-col justify-center items-left bg-white p-8 ml-10">
                 <div className="w-full max-w-md">
                     {isSignUp ? <SignUp /> : <Login />}
-                <p>
-                    <span style={{ color:'blue', cursor:'pointer'}}
+                    <p>
+                        <span style={{ color: 'blue', cursor: 'pointer' }}
                             onClick={() => setIsSignUp(!isSignUp)}
-                    >
-                        {isSignUp ? "Already a user? Log In!" : "New here? Sign Up"}
-                    </span>
-                </p>
+                        >
+                            {isSignUp ? "Already a user? Log In!" : "New here? Sign Up"}
+                        </span>
+                    </p>
                 </div>
             </div>
         </motion.div>

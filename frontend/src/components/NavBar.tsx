@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { FaBars, FaTimes } from 'react-icons/fa';
-import { useAuth } from '../contexts/AuthContext';
 
 const NavBar: React.FC = () => {
   const [scrolling, setScrolling] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const { isAuthenticated, logout } = useAuth();
 
   const handleScroll = () => {
     if (window.scrollY > 50) {
@@ -27,10 +25,7 @@ const NavBar: React.FC = () => {
     setMenuOpen(!menuOpen);
   };
 
-  const handleLogout = () => {
-    logout();
-    toggleMenu();
-  };
+
 
   return (
     <nav
@@ -42,14 +37,14 @@ const NavBar: React.FC = () => {
           <NavLink
             to="/"
             className={({ isActive }) =>
-              `text-2xl font-bold transition-colors ${(isActive || isAuthenticated()) ? 'text-blue-500' : 'text-black hover:text-blue-500'
+              `text-2xl font-bold transition-colors ${(isActive) ? 'text-blue-500' : 'text-black hover:text-blue-500'
               }`
             }
           >
             Sail Social
           </NavLink>
           {
-            !isAuthenticated() && (
+            (
               <div className="hidden md:flex space-x-4">
                 <NavLink
                   to="/learn"
@@ -99,17 +94,7 @@ const NavBar: React.FC = () => {
 
         {/* For bigger screens */}
         <div className="hidden md:flex items-center space-x-4">
-          {isAuthenticated() ? (
-            <button
-              className="bg-red-500 text-white px-4 py-2 rounded-full hover:bg-red-600 transition-colors"
-              onClick={logout}
-            >
-              Sign Out
-            </button>
-          ) : (
-            <>
-            </>
-          )}
+
         </div>
       </div>
 
@@ -120,7 +105,7 @@ const NavBar: React.FC = () => {
       >
         <FaTimes className="absolute top-5 right-5 text-3xl cursor-pointer" onClick={toggleMenu} />
         {
-          !isAuthenticated() && (
+          (
             <NavLink
               to="/learn"
               className={({ isActive }) =>
@@ -134,7 +119,7 @@ const NavBar: React.FC = () => {
           )
         }
         {
-          !isAuthenticated() && (
+          (
             <NavLink
               to="/business"
               className={({ isActive }) =>
@@ -148,7 +133,7 @@ const NavBar: React.FC = () => {
           )
         }
         {
-          !isAuthenticated() && (
+          (
             <NavLink
               to="/creators"
               className={({ isActive }) =>
@@ -162,7 +147,7 @@ const NavBar: React.FC = () => {
           )
         }
         {
-          !isAuthenticated() && (
+          (
             <NavLink
               to="/pricing"
               className={({ isActive }) =>
@@ -176,17 +161,7 @@ const NavBar: React.FC = () => {
           )
         }
 
-        {isAuthenticated() ? (
-          <button
-            className="bg-red-500 text-white px-4 py-2 rounded-full hover:bg-red-600 transition-colors"
-            onClick={handleLogout}
-          >
-            Sign Out
-          </button>
-        ) : (
-          <>
-          </>
-        )}
+
       </div>
     </nav>
   );

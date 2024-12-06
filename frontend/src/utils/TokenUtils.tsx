@@ -1,22 +1,12 @@
-import { jwtDecode } from "jwt-decode";
-
-export const decryptToken = (token: string) => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const decodeToken = (token: string): any | null => {
     try {
-        const decodedPayload = jwtDecode(token);
-        return decodedPayload;
+        const rawPL = token.split('.')[1];
+        const decodeddPL = atob(rawPL);
+        return JSON.parse(decodeddPL);
     } catch (error) {
-        console.error('Failed to decode token', error);
+        console.log("Failed to decode token ", error);
         return null;
     }
-};
-
-export const isTokenExpired = (token: string): boolean => {
-    const decodedToken: any = decryptToken(token);
-
-    if (!decodedToken || !decodedToken.exp) {
-        return true;
-    }
-
-    const currentTime = Math.floor(Date.now() / 1000);
-    return decodedToken.exp < currentTime;
-};
+}
+export default decodeToken;
