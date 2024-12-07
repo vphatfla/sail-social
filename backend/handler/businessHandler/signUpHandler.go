@@ -12,12 +12,12 @@ import (
 
 func SignUpHandler(w http.ResponseWriter, r *http.Request) {
 	var businessCredential model.BusinessCredential
-
+	defer r.Body.Close()
 	// Decode the json payload
 	err := json.NewDecoder(r.Body).Decode(&businessCredential)
 
 	if err != nil {
-		w.WriteHeader(400)
+		w.WriteHeader(http.StatusBadRequest)
 		json.NewEncoder(w).Encode(customError.ErrorMessage{Message: err.Error() + " json payload invalid"})
 		return
 	}
@@ -26,13 +26,13 @@ func SignUpHandler(w http.ResponseWriter, r *http.Request) {
 	check, err := businessQuery.CheckIfEmailExists(businessCredential.Email)
 
 	if err != nil {
-		w.WriteHeader(400)
+		w.WriteHeader(http.StatusBadRequest)
 		json.NewEncoder(w).Encode(customError.ErrorMessage{Message: err.Error() + " error checking email not OK"})
 		return
 	}
 
 	if check {
-		w.WriteHeader(400)
+		w.WriteHeader(http.StatusBadRequest)
 		json.NewEncoder(w).Encode(customError.ErrorMessage{Message: "Email Exists"})
 		return
 	}
@@ -41,13 +41,13 @@ func SignUpHandler(w http.ResponseWriter, r *http.Request) {
 	check, err = businessQuery.CheckIfPhoneNumberExists(businessCredential.PhoneNumber)
 
 	if err != nil {
-		w.WriteHeader(400)
+		w.WriteHeader(http.StatusBadRequest)
 		json.NewEncoder(w).Encode(customError.ErrorMessage{Message: err.Error() + " error checking phone not OK"})
 		return
 	}
 
 	if check {
-		w.WriteHeader(400)
+		w.WriteHeader(http.StatusBadRequest)
 		json.NewEncoder(w).Encode(customError.ErrorMessage{Message: "Phone Number Exists"})
 		return
 	}
@@ -55,7 +55,7 @@ func SignUpHandler(w http.ResponseWriter, r *http.Request) {
 	// hash operation
 	hash, err := hashing.HashPassword(string(businessCredential.RawPassword))
 	if err != nil {
-		w.WriteHeader(400)
+		w.WriteHeader(http.StatusBadRequest)
 		json.NewEncoder(w).Encode(customError.ErrorMessage{Message: "Hashing not OK" + err.Error()})
 		return
 	}
@@ -63,18 +63,18 @@ func SignUpHandler(w http.ResponseWriter, r *http.Request) {
 	// insert the record
 	id, err := businessQuery.InsertNewRecord(businessCredential)
 	if err != nil {
-		w.WriteHeader(400)
+		w.WriteHeader(http.StatusBadRequest)
 		json.NewEncoder(w).Encode(customError.ErrorMessage{Message: "Database : " + err.Error()})
 		return
 	}
 
 	token, err := jwtToken.GenerateJWTToken(id, "business", false)
 	if err != nil {
-		w.WriteHeader(400)
+		w.WriteHeader(http.StatusBadRequest)
 		json.NewEncoder(w).Encode(customError.ErrorMessage{Message: "Token : " + err.Error()})
 		return
 	}
 
-	w.WriteHeader(200)
+	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(map[string]string{"token": token})
 }

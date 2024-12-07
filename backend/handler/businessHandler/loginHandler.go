@@ -12,11 +12,12 @@ import (
 
 func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	var businessCredential model.BusinessCredential
+	defer r.Body.Close()
 	// Decode the json payload
 	err := json.NewDecoder(r.Body).Decode(&businessCredential)
 
 	if err != nil {
-		w.WriteHeader(400)
+		w.WriteHeader(http.StatusBadRequest)
 		json.NewEncoder(w).Encode(customError.ErrorMessage{Message: err.Error() + " json payload invalid"})
 		return
 	}
@@ -24,7 +25,7 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	hashedPassword, err := businessQuery.GetHashPassword(businessCredential.Email)
 
 	if err != nil {
-		w.WriteHeader(400)
+		w.WriteHeader(http.StatusBadRequest)
 		json.NewEncoder(w).Encode(customError.ErrorMessage{Message: err.Error()})
 		return
 	}
@@ -32,14 +33,14 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	err = hashing.VerifyPassword(hashedPassword, businessCredential.RawPassword)
 
 	if err != nil {
-		w.WriteHeader(400)
+		w.WriteHeader(http.StatusBadRequest)
 		json.NewEncoder(w).Encode(customError.ErrorMessage{Message: err.Error() + " passwords do not match"})
 		return
 	}
 
 	businessCredential, err = businessQuery.GetBusinessCredentialByEmail(businessCredential.Email)
 	if err != nil {
-		w.WriteHeader(400)
+		w.WriteHeader(http.StatusBadRequest)
 		json.NewEncoder(w).Encode(customError.ErrorMessage{Message: err.Error() + " passwords do not match"})
 		return
 	}
@@ -47,11 +48,11 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	// token
 	token, err := jwtToken.GenerateJWTToken(businessCredential.ID, "business", businessCredential.IsOnboarded)
 	if err != nil {
-		w.WriteHeader(400)
+		w.WriteHeader(http.StatusBadRequest)
 		json.NewEncoder(w).Encode(customError.ErrorMessage{Message: "Token : " + err.Error()})
 		return
 	}
 
-	w.WriteHeader(200)
+	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(map[string]string{"token": token})
 }
