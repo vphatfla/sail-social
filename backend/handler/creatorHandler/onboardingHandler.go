@@ -12,10 +12,11 @@ import (
 func OnboadingHandler(w http.ResponseWriter, r *http.Request) {
 	var creatorInfo model.CreatorInfo
 	// decode body request json payload
+	defer r.Body.Close()
 	err := json.NewDecoder(r.Body).Decode(&creatorInfo)
 
 	if err != nil {
-		w.WriteHeader(400)
+		w.WriteHeader(http.StatusBadRequest)
 		json.NewEncoder(w).Encode(customError.ErrorMessage{Message: err.Error() + " json payload invalid"})
 		return
 	}
@@ -25,7 +26,7 @@ func OnboadingHandler(w http.ResponseWriter, r *http.Request) {
 	check, err := creatorQuery.IsInfoRecordValid(int(creatorInfo.ID), creatorInfo.Email, creatorInfo.PhoneNumber)
 
 	if err != nil {
-		w.WriteHeader(400)
+		w.WriteHeader(http.StatusBadRequest)
 		json.NewEncoder(w).Encode(customError.ErrorMessage{Message: err.Error() + " json payload invalid"})
 		return
 	}
@@ -41,7 +42,7 @@ func OnboadingHandler(w http.ResponseWriter, r *http.Request) {
 	id, err := creatorQuery.InsertNewInfoRecordAndUpdateOnBoardingStatus(creatorInfo)
 
 	if err != nil {
-		w.WriteHeader(400)
+		w.WriteHeader(http.StatusBadRequest)
 		json.NewEncoder(w).Encode(customError.ErrorMessage{Message: " insert record info " + err.Error()})
 		return
 	}
@@ -50,7 +51,7 @@ func OnboadingHandler(w http.ResponseWriter, r *http.Request) {
 	token, err := jwtToken.GenerateJWTToken(id, "creator", true)
 
 	if err != nil {
-		w.WriteHeader(400)
+		w.WriteHeader(http.StatusBadRequest)
 		json.NewEncoder(w).Encode(customError.ErrorMessage{Message: "Token : " + err.Error()})
 		return
 	}
@@ -60,6 +61,6 @@ func OnboadingHandler(w http.ResponseWriter, r *http.Request) {
 		"token": token,
 	}
 
-	w.WriteHeader(200)
+	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(response)
 }

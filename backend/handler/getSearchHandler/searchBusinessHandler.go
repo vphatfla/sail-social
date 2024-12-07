@@ -12,11 +12,11 @@ import (
 func GetBusinessHandler(w http.ResponseWriter, r *http.Request) {
 	var payload map[string]interface{}
 	var businessType, city, state, country, zipcode *string
-
+	defer r.Body.Close()
 	err := json.NewDecoder(r.Body).Decode(&payload)
 
 	if err != nil && !errors.Is(err, io.EOF) {
-		w.WriteHeader(400)
+		w.WriteHeader(http.StatusBadRequest)
 		json.NewEncoder(w).Encode(customeError.ErrorMessage{Message: err.Error() + " json payload invalid"})
 		return
 
@@ -46,12 +46,12 @@ func GetBusinessHandler(w http.ResponseWriter, r *http.Request) {
 	listBusiness, err := searchQuery.GetBusiness(businessType, city, state, country, zipcode)
 
 	if err != nil {
-		w.WriteHeader(400)
+		w.WriteHeader(http.StatusBadRequest)
 		json.NewEncoder(w).Encode(customeError.ErrorMessage{Message: err.Error()})
 		return
 	}
 
 	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(200)
+	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(listBusiness)
 }

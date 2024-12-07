@@ -10,11 +10,11 @@ import (
 
 func PostNewPortfolioHandler(w http.ResponseWriter, r *http.Request) {
 	var creatorPortfolio model.CreatorPortfolio
-
+	defer r.Body.Close()
 	err := json.NewDecoder(r.Body).Decode(&creatorPortfolio)
 
 	if err != nil {
-		w.WriteHeader(400)
+		w.WriteHeader(http.StatusBadRequest)
 		json.NewEncoder(w).Encode(customError.ErrorMessage{Message: err.Error() + " json payload invalid"})
 		return
 	}
@@ -22,11 +22,12 @@ func PostNewPortfolioHandler(w http.ResponseWriter, r *http.Request) {
 	id, err := creatorQuery.InsertNewPortfolioRecord(creatorPortfolio)
 
 	if err != nil {
-		w.WriteHeader(400)
+		w.WriteHeader(http.StatusBadRequest)
 		json.NewEncoder(w).Encode(customError.ErrorMessage{Message: " insert record info " + err.Error()})
 		return
 	}
 
-	w.WriteHeader(200)
+	w.WriteHeader(http.StatusOK)
+	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(map[string]int{"id": id})
 }

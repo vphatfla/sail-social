@@ -3,6 +3,6 @@ package creatorHandler
 import "net/http"
 
 func DefaultHandler(w http.ResponseWriter, r *http.Request) {
-	w.WriteHeader(200)
+	w.WriteHeader(http.StatusOK)
 	w.Write([]byte("Hello from default api of creator!"))
 }

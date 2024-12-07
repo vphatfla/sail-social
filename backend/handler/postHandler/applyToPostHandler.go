@@ -10,11 +10,11 @@ import (
 
 func NewApplyToPostHandler(w http.ResponseWriter, r *http.Request) {
 	var creatorPostApplied model.CreatorPostApplied
-
+	defer r.Body.Close()
 	err := json.NewDecoder(r.Body).Decode(&creatorPostApplied)
 
 	if err != nil {
-		w.WriteHeader(400)
+		w.WriteHeader(http.StatusBadRequest)
 		json.NewEncoder(w).Encode(customeError.ErrorMessage{Message: err.Error() + " json payload invalid"})
 		return
 	}
@@ -22,12 +22,12 @@ func NewApplyToPostHandler(w http.ResponseWriter, r *http.Request) {
 	creatorId, postId, err := postQuery.InsertNewApplyRecord(creatorPostApplied)
 
 	if err != nil {
-		w.WriteHeader(400)
+		w.WriteHeader(http.StatusBadRequest)
 		json.NewEncoder(w).Encode(customeError.ErrorMessage{Message: "Data base faield : " + err.Error()})
 		return
 	}
 
-	w.WriteHeader(200)
+	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(map[string]int{"creatorId": creatorId, "postId": postId})
 }
 
@@ -37,7 +37,7 @@ func UpdateApplyToPostHandler(w http.ResponseWriter, r *http.Request) {
 	err := json.NewDecoder(r.Body).Decode(&creatorPostApplied)
 
 	if err != nil {
-		w.WriteHeader(400)
+		w.WriteHeader(http.StatusBadRequest)
 		json.NewEncoder(w).Encode(customeError.ErrorMessage{Message: err.Error() + " json payload invalid"})
 		return
 	}
@@ -45,11 +45,11 @@ func UpdateApplyToPostHandler(w http.ResponseWriter, r *http.Request) {
 	creatorId, postId, err := postQuery.UpdateApplyRecord(creatorPostApplied)
 
 	if err != nil {
-		w.WriteHeader(400)
+		w.WriteHeader(http.StatusBadRequest)
 		json.NewEncoder(w).Encode(customeError.ErrorMessage{Message: "Data base faield : " + err.Error()})
 		return
 	}
 
-	w.WriteHeader(200)
+	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(map[string]int{"creatorId": creatorId, "postId": postId})
 }

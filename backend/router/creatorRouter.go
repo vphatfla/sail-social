@@ -27,6 +27,8 @@ func creatorRouter() http.Handler {
 		r.Post("/portfolio-new", creatorHandler.PostNewPortfolioHandler)
 		r.Post("/post-apply", postHandler.NewApplyToPostHandler)
 		r.Post("/post-update", postHandler.UpdateApplyToPostHandler)
+		r.Post("/search-creator-cred", creatorHandler.SearchCreatorCredInfoHandler)
+		r.Post("/search-creator-info", creatorHandler.SearchCreatorInfoHandler)
 	})
 	return r
 }

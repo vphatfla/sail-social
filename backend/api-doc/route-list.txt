@@ -17,6 +17,8 @@ For creator: prefix: creator, exaple route: localhost:3000/api/creator/test
         Create new portfolio: POST /portfolio-new
         Apply to a job posting: POST /apply-new
         Update to a job posting (unapply): POST /apply-update
+        Search for creator credential (id, email, phone number that were used to register): POST /search-creator-credential   (json body must contains field "userId")
+        Search for creator info (must have already onboarded): POST /search-creator-info   (json body must contains field "userId")       
 
 For business: prefix: business, example route: localhost:3000/api/business/test
     Public routes:
@@ -29,6 +31,8 @@ For business: prefix: business, example route: localhost:3000/api/business/test
        Create new portfolio: POST /portfolio-new
        Create new post: POST /post-new
        Update the post (edit): POST /post-update
+       Search for business credential (id, email, phone number that were used to register): POST /search-business-credential   (json body must contains field "userId")
+       Search for business info (must have already onboarded): POST /search-business-info   (json body must contains field "userId")       
 
 General route (can be used by both business or creator):
     prefix: /general, example: localhost:3000/api/general/post

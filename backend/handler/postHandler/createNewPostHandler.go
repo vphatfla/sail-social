@@ -10,11 +10,11 @@ import (
 
 func CreateNewPostHandler(w http.ResponseWriter, r *http.Request) {
 	var newPost model.Post
-
+	defer r.Body.Close()
 	err := json.NewDecoder(r.Body).Decode(&newPost)
 
 	if err != nil {
-		w.WriteHeader(400)
+		w.WriteHeader(http.StatusBadRequest)
 		json.NewEncoder(w).Encode(customeError.ErrorMessage{Message: err.Error() + " json payload invalid"})
 		return
 	}
@@ -22,11 +22,11 @@ func CreateNewPostHandler(w http.ResponseWriter, r *http.Request) {
 	id, err := postQuery.InsertNewPostRecord(newPost)
 
 	if err != nil {
-		w.WriteHeader(400)
+		w.WriteHeader(http.StatusBadRequest)
 		json.NewEncoder(w).Encode(customeError.ErrorMessage{Message: "Database Insert Opertion Failed" + err.Error()})
 		return
 	}
 
-	w.WriteHeader(200)
+	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(map[string]int{"id": id})
 }

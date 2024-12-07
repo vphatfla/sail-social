@@ -26,6 +26,8 @@ func businessRouter() http.Handler {
 		r.Post("/onboarding", businesshandler.OnboadingHandler)
 		r.Post("/post-new", postHandler.CreateNewPostHandler)
 		r.Post("/post-update", postHandler.UpdatePostHandler)
+		r.Post("/search-business-cred", businesshandler.SearchBusinessCredHandler)
+		r.Post("/search-business-info", businesshandler.SearchBusinessInfoHandler)
 	})
 	return r
 }

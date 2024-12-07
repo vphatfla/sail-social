@@ -31,7 +31,7 @@ func JWTMiddleware(next http.Handler) http.Handler {
 
 		// cid := r.URL.Query().Get("cid")
 		// if cid == "" {
-		// 	w.WriteHeader(400)
+		// 	w.WriteHeader(http.StatusBadRequest)
 		// 	json.NewEncoder(w).Encode(customError.ErrorMessage{Message: "Creator Id is empty"})
 		// 	return
 		// }
