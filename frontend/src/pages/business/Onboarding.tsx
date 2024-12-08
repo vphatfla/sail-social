@@ -1,9 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import config from "../../config/config";
+import { decodeToken, saveDataLocalStorage } from "../../utils/TokenUtils";
+import { useNavigate } from "react-router-dom";
 
 const BusinessOnboarding: React.FC = () => {
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
-    email: "user@example.com", // Hardcoded email
-    phoneNumber: "123-456-7890", // Hardcoded phone number
+    email: "",
+    phoneNumber: "",
     firstName: "",
     lastName: "",
     businessName: "",
@@ -16,15 +21,72 @@ const BusinessOnboarding: React.FC = () => {
     country: "",
   });
 
+  // on mounted
+  useEffect(() => {
+    console.log("mounted component")
+    fetchUserEmailAndPhone()
+  }, [formData.email, formData.phoneNumber])
+
+  const fetchUserEmailAndPhone = async () => {
+    try {
+      const res = await fetch(config.SERVER_URL + '/creator/search-business-cred', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('token')}`
+        },
+        body: JSON.stringify({
+          "userId": parseInt(localStorage.getItem('userId') || '0')
+        })
+      });
+
+      const data = await res.json();
+      const toUpdateData = {
+        "email": data.email,
+        "phoneNumber": data.phoneNumber
+      }
+
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        ...toUpdateData,
+      }));
+
+    } catch (err: unknown) {
+      console.log(err)
+    }
+  };
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { id, value } = e.target;
     setFormData((prev) => ({ ...prev, [id]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Submitted data:", formData);
-    // Add form submission logic here
+
+    const rBody = {
+      id: parseInt(localStorage.getItem('userId') || "0"),
+      ...formData,
+    }
+
+    const res = await fetch(config.SERVER_URL + '/business/onboarding', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('token')}`
+      },
+      body: JSON.stringify(rBody)
+    });
+
+    if (!res.ok) {
+      console.log(res);
+      return;
+    }
+
+    const data = await res.json();
+    const decodedPL = decodeToken(data.token);
+    saveDataLocalStorage(decodedPL);
+
+    navigate('/creator/feed');
   };
 
   return (
