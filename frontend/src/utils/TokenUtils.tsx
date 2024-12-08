@@ -9,4 +9,12 @@ const decodeToken = (token: string): any | null => {
         return null;
     }
 }
-export default decodeToken;
+
+const saveDataLocalStorage = (decodedPL: JSON) => {
+    if (decodedPL !== null) {
+        Object.entries(decodedPL).forEach(([key, value]) => {
+            localStorage.setItem(key, value + '')
+        })
+    }
+}
+export { decodeToken, saveDataLocalStorage };

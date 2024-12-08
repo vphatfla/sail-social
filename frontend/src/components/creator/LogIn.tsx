@@ -1,14 +1,15 @@
 import React, { useState } from "react";
 import config from "../../config/config";
-import decodeToken from "../../utils/TokenUtils";
+import { decodeToken } from "../../utils/TokenUtils";
 import { useNavigate } from "react-router-dom";
+
 
 
 const LoginForm: React.FC = () => {
   const navigate = useNavigate();
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("example123@gmail.com");
+  const [password, setPassword] = useState("123456");
   const [isEmailValid, setIsEmailValid] = useState(true);
   const [error, setError] = useState("");
 
