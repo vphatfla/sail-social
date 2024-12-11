@@ -10,7 +10,8 @@ import (
 
 func GetBusinessCredentialByEmail(email string) (model.BusinessCredential, error) {
 	var businessCredential model.BusinessCredential
-	err := db.DBPool.QueryRow(context.Background(), "SELECT id, email, password, phone_number, is_verified FROM business_credential WHERE email = $1;", email).Scan(&businessCredential.ID, &businessCredential.Email, &businessCredential.HashedPassword, &businessCredential.PhoneNumber, &businessCredential.IsVerified)
+	err := db.DBPool.QueryRow(context.Background(), "SELECT id, email, password, phone_number, is_verified, is_onboarded FROM business_credential WHERE email = $1;", email).
+		Scan(&businessCredential.ID, &businessCredential.Email, &businessCredential.HashedPassword, &businessCredential.PhoneNumber, &businessCredential.IsVerified, &businessCredential.IsOnboarded)
 	if err != nil {
 		if err != sql.ErrNoRows {
 			return businessCredential, fmt.Errorf("error - no record found by email")
