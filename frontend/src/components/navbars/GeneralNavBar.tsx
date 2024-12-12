@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { FaBars, FaTimes } from 'react-icons/fa';
 
-const NavBar: React.FC = () => {
+const GeneralNavBar: React.FC = () => {
   const [scrolling, setScrolling] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -167,4 +167,4 @@ const NavBar: React.FC = () => {
   );
 };
 
-export default NavBar;
+export default GeneralNavBar;

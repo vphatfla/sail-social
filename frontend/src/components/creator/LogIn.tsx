@@ -54,7 +54,7 @@ const LoginForm: React.FC = () => {
       }
 
       if (decodedPL.isOnboarded) {
-        navigate('/creator/feed');
+        navigate('/creator');
       } else navigate('/creator/onboarding');
     }
   };
