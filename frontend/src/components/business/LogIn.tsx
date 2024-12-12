@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import config from "../../config/config";
-import decodeToken from "../../utils/TokenUtils";
+import { decodeToken } from "../../utils/TokenUtils";
 
 const LoginForm: React.FC = () => {
   const navigate = useNavigate();

@@ -21,8 +21,8 @@ const Home: React.FC = () => {
       <div className="flex-1 flex flex-row items-center justify-center bg-white space-x-10">
         <p className="text-xl">I am a</p>
         <div className="space-x-4">
-          <button className="btn btn-outline-primary w-48" onClick={() => navigate('/creator')}>Creator</button>
-          <button className="btn btn-outline-primary w-48" onClick={() => navigate('/business')}>Business</button>
+          <button className="btn btn-outline-primary w-48" onClick={() => navigate('/creator/auth')}>Creator</button>
+          <button className="btn btn-outline-primary w-48" onClick={() => navigate('/business/auth')}>Business</button>
         </div>
       </div>
     </motion.div>

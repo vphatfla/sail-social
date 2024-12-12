@@ -10,7 +10,8 @@ import (
 
 func GetCreatorCredentialByEmail(email string) (model.CreatorCredential, error) {
 	var creatorCredential model.CreatorCredential
-	err := db.DBPool.QueryRow(context.Background(), "SELECT id, email, password, phone_number, is_verified FROM creator_credential WHERE email = $1;", email).Scan(&creatorCredential.ID, &creatorCredential.Email, &creatorCredential.HashedPassword, &creatorCredential.PhoneNumber, &creatorCredential.IsVerified)
+	err := db.DBPool.QueryRow(context.Background(), "SELECT id, email, password, phone_number, is_verified, is_onboarded FROM creator_credential WHERE email = $1;", email).
+		Scan(&creatorCredential.ID, &creatorCredential.Email, &creatorCredential.HashedPassword, &creatorCredential.PhoneNumber, &creatorCredential.IsVerified, &creatorCredential.IsOnboarded)
 	if err != nil {
 		if err != sql.ErrNoRows {
 			return creatorCredential, fmt.Errorf("error - no record found by email")

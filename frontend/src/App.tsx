@@ -4,22 +4,27 @@ import { AnimatePresence } from 'framer-motion';
 import { Location } from 'history';
 
 // import { useAuth } from './contexts/AuthContext';
-import NavBar from './components/NavBar';
+import GeneralNavBar from './components/navbars/GeneralNavBar.tsx';
+import CreatorNavBar from './components/creator/CreatorNavBar.tsx';
+import BusinessNavBar from './components/business/BusinessNavBar.tsx';
+import JobFeedComponent from './components/creator/JobFeed.tsx';
+import AppliedJobsComponent from './components/creator/AppliedJob.tsx';
+import NotificationComponent from './components/creator/Notifcation.tsx';
 
 
 const Home = React.lazy(() => import('./pages/Home'));
 const Learn = React.lazy(() => import('./pages/Learn'));
-const Business = React.lazy(() => import('./pages/business/Home'));
-const Creator = React.lazy(() => import('./pages/creator/Home'));
+const BusinessAuth = React.lazy(() => import('./pages/business/Auth.tsx'));
+const CreatorAuth = React.lazy(() => import('./pages/creator/Auth.tsx'));
 const Pricing = React.lazy(() => import('./pages/Pricing'));
 
 // for creator pages
 const CreatorOnboarding = React.lazy(() => import('./pages/creator/Onboarding.tsx'));
-const CreatorFeed = React.lazy(() => import('./pages/creator/Feed.tsx'));
+const CreatorHome = React.lazy(() => import('./pages/creator/Home.tsx'));
 
 // for business pages
 const BusinessOnboarding = React.lazy(() => import('./pages/business/Onboarding.tsx'));
-const BusinessFeed = React.lazy(() => import('./pages/business/Feed.tsx'));
+const BusinessHome = React.lazy(() => import('./pages/business/Home.tsx'));
 
 const MainPage: React.FC<{ location: Location }> = ({ location }) => {
   return (
@@ -27,13 +32,18 @@ const MainPage: React.FC<{ location: Location }> = ({ location }) => {
       <Route path="/" element={<Home />} />
       <Route path="/learn" element={<Learn />} />
 
-      <Route path="/business" element={<Business />} />
+      <Route path="/business/auth" element={<BusinessAuth />} />
       <Route path="/business/onboarding" element={<BusinessOnboarding />} />
-      <Route path="/business/feed" element={<BusinessFeed />} />
+      <Route path="/business" element={<BusinessHome />} />
 
-      <Route path="/creator" element={<Creator />} />
+      <Route path="/creator/auth" element={<CreatorAuth />} />
       <Route path="/creator/onboarding" element={<CreatorOnboarding />} />
-      <Route path="/creator/feed" element={<CreatorFeed />} />
+      <Route path="/creator" element={<CreatorHome />}>
+        <Route index element={<JobFeedComponent />} />
+        <Route path="job-feed" element={<JobFeedComponent />} />
+        <Route path="applied-jobs" element={<AppliedJobsComponent />} />
+        <Route path="notifications" element={<NotificationComponent />} />
+      </Route>
 
       <Route path="/pricing" element={<Pricing />} />
     </Routes>
@@ -42,16 +52,22 @@ const MainPage: React.FC<{ location: Location }> = ({ location }) => {
 
 const App: React.FC = () => {
   const location = useLocation();
-  // const { isOnboarded, isAuthenticated } = useAuth();
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  let dynamicNavBar: any
+
+  if (location.pathname.includes("/creator") && !location.pathname.includes("auth")) {
+    dynamicNavBar = <CreatorNavBar />
+  } else if (location.pathname.includes("/business") && !location.pathname.includes("auth")) {
+    dynamicNavBar = <BusinessNavBar />
+  } else dynamicNavBar = <GeneralNavBar />
 
   return (
     <div>
-      <NavBar />
+      {dynamicNavBar}
       <div className='mt-24 container mx-auto'>
         <AnimatePresence mode='wait'>
-          <Suspense
-          // fallback={<div>Loading...</div>}
-          >
+          <Suspense>
             <MainPage location={location} />
           </Suspense>
         </AnimatePresence>
