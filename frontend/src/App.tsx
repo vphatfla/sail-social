@@ -7,7 +7,7 @@ import { Location } from 'history';
 import GeneralNavBar from './components/navbars/GeneralNavBar.tsx';
 import CreatorNavBar from './components/creator/CreatorNavBar.tsx';
 import BusinessNavBar from './components/business/BusinessNavBar.tsx';
-import JobFeedComponent from './components/creator/JobFeed.tsx';
+import JobFeedComponent from './components/creator/jobfeed/JobFeed.tsx';
 import AppliedJobsComponent from './components/creator/AppliedJob.tsx';
 import NotificationComponent from './components/creator/Notifcation.tsx';
 
